@@ -5,9 +5,9 @@
 #
 
 # Inherit from the proprietary version
-include vendor/xiaomi/onyx-miuicamera/BoardConfigVendor.mk
+include vendor/xiaomi/dada-miuicamera/BoardConfigVendor.mk
 
-MIUICAMERA_PATH := device/xiaomi/onyx-miuicamera
+MIUICAMERA_PATH := device/xiaomi/dada-miuicamera
 
 # Properties
 TARGET_SYSTEM_PROP += $(MIUICAMERA_PATH)/system.prop
