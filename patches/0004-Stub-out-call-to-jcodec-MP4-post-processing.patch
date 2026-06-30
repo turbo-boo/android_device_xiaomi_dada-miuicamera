@@ -1,15 +1,14 @@
-From 8b778186a9492d617e403738ecdce42e2977dbc5 Mon Sep 17 00:00:00 2001
+From fec3d75e3771347cd5e86bcde5f3248cf3e386e5 Mon Sep 17 00:00:00 2001
 From: AdarshGrewal <adarshgrewal@gmail.com>
 Date: Sun, 7 Jun 2026 15:59:45 +0530
 Subject: [PATCH 4/7] Stub out call to jcodec MP4 post-processing
 
-* this seems to be only for MP4 cover tag
 ---
  smali_classes6/Fj/e.smali | 270 +-------------------------------------
  1 file changed, 1 insertion(+), 269 deletions(-)
 
 diff --git a/smali_classes6/Fj/e.smali b/smali_classes6/Fj/e.smali
-index 068d694a..922aa20b 100644
+index bfa33d67..922aa20b 100644
 --- a/smali_classes6/Fj/e.smali
 +++ b/smali_classes6/Fj/e.smali
 @@ -5,275 +5,7 @@
@@ -77,13 +76,13 @@ index 068d694a..922aa20b 100644
 -
 -    iget-object v3, v2, Lzj/e;->a:Ljava/lang/Object;
 -
--    check-cast v3, LCj/g$a;
+-    check-cast v3, LCj/h$a;
 -
 -    iget-object v2, v2, Lzj/e;->b:Ljava/lang/Object;
 -
 -    check-cast v2, Ljava/nio/ByteBuffer;
 -
--    iget-wide v3, v3, LCj/g$a;->a:J
+-    iget-wide v3, v3, LCj/h$a;->a:J
 -
 -    invoke-virtual {v0, v3, v4}, LAj/a;->a(J)V
 -
@@ -126,7 +125,7 @@ index 068d694a..922aa20b 100644
 -    .catchall {:try_start_3 .. :try_end_3} :catchall_2
 -
 -    :try_start_4
--    invoke-static {v1}, LCj/g;->b(LAj/a;)Ljava/util/ArrayList;
+-    invoke-static {v1}, LCj/h;->b(LAj/a;)Ljava/util/ArrayList;
 -
 -    move-result-object v2
 -
@@ -145,9 +144,9 @@ index 068d694a..922aa20b 100644
 -
 -    move-result-object v3
 -
--    check-cast v3, LCj/g$a;
+-    check-cast v3, LCj/h$a;
 -
--    iget-object v4, v3, LCj/g$a;->b:Lorg/jcodec/containers/mp4/boxes/b;
+-    iget-object v4, v3, LCj/h$a;->b:Lorg/jcodec/containers/mp4/boxes/b;
 -
 -    iget-object v4, v4, Lorg/jcodec/containers/mp4/boxes/b;->a:Ljava/lang/String;
 -
@@ -162,11 +161,11 @@ index 068d694a..922aa20b 100644
 -    move-object v0, v3
 -
 -    :cond_3
--    iget-wide v2, v0, LCj/g$a;->a:J
+-    iget-wide v2, v0, LCj/h$a;->a:J
 -    :try_end_4
 -    .catchall {:try_start_4 .. :try_end_4} :catchall_1
 -
--    iget-object v4, v0, LCj/g$a;->b:Lorg/jcodec/containers/mp4/boxes/b;
+-    iget-object v4, v0, LCj/h$a;->b:Lorg/jcodec/containers/mp4/boxes/b;
 -
 -    :try_start_5
 -    invoke-virtual {v1, v2, v3}, LAj/a;->a(J)V
@@ -191,13 +190,13 @@ index 068d694a..922aa20b 100644
 -
 -    check-cast v2, Lorg/jcodec/containers/mp4/boxes/MovieBox;
 -
--    invoke-interface {p1, v2}, LFj/b;->b(Lorg/jcodec/containers/mp4/boxes/MovieBox;)V
+-    invoke-interface {p1, v2}, LFj/b;->a(Lorg/jcodec/containers/mp4/boxes/MovieBox;)V
 -
 -    iget-wide v3, v4, Lorg/jcodec/containers/mp4/boxes/b;->b:J
 -    :try_end_5
 -    .catchall {:try_start_5 .. :try_end_5} :catchall_1
 -
--    iget-wide v5, v0, LCj/g$a;->a:J
+-    iget-wide v5, v0, LCj/h$a;->a:J
 -
 -    add-long/2addr v3, v5
 -
@@ -290,5 +289,5 @@ index 068d694a..922aa20b 100644
 -    throw p0
  .end method
 -- 
-2.54.0
+2.43.0
 

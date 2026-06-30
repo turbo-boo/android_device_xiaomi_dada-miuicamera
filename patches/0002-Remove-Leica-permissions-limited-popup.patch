@@ -1,26 +1,27 @@
-From f194d1ea85a96dcf99bd952933a8be04bf64d296 Mon Sep 17 00:00:00 2001
+From 5aa781b436265781c97ac8d6b7825a159d050854 Mon Sep 17 00:00:00 2001
 From: AdarshGrewal <adarshgrewal@gmail.com>
 Date: Wed, 3 Jun 2026 14:00:15 +0530
 Subject: [PATCH 2/7] Remove Leica permissions limited popup
 
 ---
- smali/com/android/camera/ActivityBase$c.smali | 3 ---
- 1 file changed, 3 deletions(-)
+ smali/com/android/camera/ActivityBase$c.smali | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/smali/com/android/camera/ActivityBase$c.smali b/smali/com/android/camera/ActivityBase$c.smali
-index 71436189..36618e24 100644
+index e47ad7a3..4c4e23d8 100644
 --- a/smali/com/android/camera/ActivityBase$c.smali
 +++ b/smali/com/android/camera/ActivityBase$c.smali
-@@ -79,9 +79,6 @@
+@@ -81,10 +81,6 @@
      goto/16 :goto_1
  
      :pswitch_1
--    const p1, 0x7f140af4
+-    const p1, 0x7f140aef
 -
--    invoke-static {p0, p1, v6}, LA/e4;->c(Landroid/content/Context;IZ)V
- 
+-    invoke-static {p0, p1, v7}, LB/S3;->c(Landroid/content/Context;IZ)V
+-
      goto/16 :goto_1
  
+     :pswitch_2
 -- 
-2.54.0
+2.43.0
 

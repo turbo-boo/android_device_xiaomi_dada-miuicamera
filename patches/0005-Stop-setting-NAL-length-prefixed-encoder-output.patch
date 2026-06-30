@@ -1,25 +1,25 @@
-From 87baef7236191e5cdae959f6b22ee9abdf3d81f7 Mon Sep 17 00:00:00 2001
+From 92f1c85b14297bf9806b015b9dfb43aca9d39d97 Mon Sep 17 00:00:00 2001
 From: AdarshGrewal <adarshgrewal@gmail.com>
 Date: Sun, 7 Jun 2026 16:22:40 +0530
 Subject: [PATCH 5/7] Stop setting NAL length-prefixed encoder output
 
 ---
- smali_classes2/Hb/g.smali | 2 +-
+ smali/Ib/f.smali | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/smali_classes2/Hb/g.smali b/smali_classes2/Hb/g.smali
-index 150a576f..d86991c1 100644
---- a/smali_classes2/Hb/g.smali
-+++ b/smali_classes2/Hb/g.smali
-@@ -713,7 +713,7 @@
+diff --git a/smali/Ib/f.smali b/smali/Ib/f.smali
+index c458dbc9..66f1ecd6 100644
+--- a/smali/Ib/f.smali
++++ b/smali/Ib/f.smali
+@@ -789,7 +789,7 @@
  
-     iget-boolean v7, v4, LHb/r;->y:Z
+     iget-boolean v5, v4, LIb/q;->y:Z
  
--    if-eqz v7, :cond_17
+-    if-eqz v5, :cond_17
 +    goto :cond_17
  
-     iget v7, v4, LHb/r;->l:I
+     iget v5, v4, LIb/q;->l:I
  
 -- 
-2.54.0
+2.43.0
 

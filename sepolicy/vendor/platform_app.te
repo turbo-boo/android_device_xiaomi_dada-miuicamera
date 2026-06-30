@@ -2,6 +2,7 @@ binder_use(platform_app)
 binder_call(platform_app, hal_camera_default)
 
 allow platform_app hal_aidlbgservice_service:service_manager find;
+allow platform_app hal_misys_service:service_manager find;
 
 allow platform_app adsprpcd_file:dir { open read search };
 
@@ -9,6 +10,11 @@ allow platform_app vendor_camera_data_file:dir { append map r_dir_perms write };
 allow platform_app vendor_camera_data_file:file { getattr open read };
 
 allow platform_app app_data_file:file execute;
+
+# MIUI Camera samples PSI data to adapt its workload to system pressure.
+allow platform_app proc_pressure_cpu:file r_file_perms;
+allow platform_app proc_pressure_io:file r_file_perms;
+allow platform_app proc_pressure_mem:file r_file_perms;
 
 # Properties
 get_prop(platform_app, vendor_audio_prop)
