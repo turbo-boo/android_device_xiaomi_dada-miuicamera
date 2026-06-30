@@ -4,7 +4,7 @@ binder_call(platform_app, hal_camera_default)
 allow platform_app hal_aidlbgservice_service:service_manager find;
 allow platform_app hal_misys_service:service_manager find;
 
-allow platform_app adsprpcd_file:dir { open read search };
+allow platform_app adsprpcd_file:dir { getattr open read search };
 
 allow platform_app vendor_camera_data_file:dir { append map r_dir_perms write };
 allow platform_app vendor_camera_data_file:file { getattr open read };
