@@ -1,0 +1,2 @@
+ro.miui.build.region u:object_r:camera_config_prop:s0 exact string
+ro.miui.region       u:object_r:camera_config_prop:s0 exact string

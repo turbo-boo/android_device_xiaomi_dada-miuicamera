@@ -5,6 +5,8 @@ ro.com.google.lens.oem_camera_package=com.android.camera
 persist.vendor.camera.privapp.list=com.android.camera,org.lineageos.aperture
 
 # MiuiCamera
+ro.miui.build.region=global
 ro.miui.notch=1
+ro.miui.region=JP
 ro.miui.ui.version.name=V816
 ro.miui.ui.version.code=816
