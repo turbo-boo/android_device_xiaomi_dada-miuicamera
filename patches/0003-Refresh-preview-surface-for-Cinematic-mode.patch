@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Thu, 2 Jul 2026 14:30:00 +0900
+Subject: [PATCH 3/7] Refresh preview surface for Cinematic mode
+
+Cinematic mode replaces the GPU preview surface after its camera-open
+Single has already completed. Include mode 0xe3 in the existing
+updatePreviewSurface path so its capture session is created against the
+replacement surface.
+---
+ smali/com/android/camera/Camera.smali | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/smali/com/android/camera/Camera.smali b/smali/com/android/camera/Camera.smali
+index 77f0f85d..a26eef36 100644
+--- a/smali/com/android/camera/Camera.smali
++++ b/smali/com/android/camera/Camera.smali
+@@ -8976,6 +8976,10 @@
+ 
+     const/16 v0, 0xe1
+ 
++    if-eq p1, v0, :cond_6
++
++    const/16 v0, 0xe3
++
+     if-eq p1, v0, :cond_6
+ 
+     const/16 v0, 0xe4
+-- 
+2.43.0
