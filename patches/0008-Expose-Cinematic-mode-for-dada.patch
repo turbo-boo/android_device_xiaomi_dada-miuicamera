@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Sat, 11 Jul 2026 12:00:00 +0900
+Subject: [PATCH] Expose Cinematic mode for dada
+
+The stock APK has no capability class keyed by the dada codename, so its
+fallback capability reports Cinematic mode as unsupported even though the
+module and recorder are included.  Make the capability gate reflect the
+available dada camera implementation.
+---
+ .../䱍䱁䱃䰀䱃䱇䰀䱊䱋䱘䱇䱍䱋䰀䱍䱁䱃䱃䱁䱀䰀䱭䱁䱃䱃䱁䱀.smali | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/smali_classes4/䱍䱁䱃䰀䱃䱇䰀䱊䱋䱘䱇䱍䱋䰀䱍䱁䱃䱃䱁䱀䰀䱭䱁䱃䱃䱁䱀.smali b/smali_classes4/䱍䱁䱃䰀䱃䱇䰀䱊䱋䱘䱇䱍䱋䰀䱍䱁䱃䱃䱁䱀䰀䱭䱁䱃䱃䱁䱀.smali
+index 00000000..00000000 100644
+--- a/smali_classes4/䱍䱁䱃䰀䱃䱇䰀䱊䱋䱘䱇䱍䱋䰀䱍䱁䱃䱃䱁䱀䰀䱭䱁䱃䱃䱁䱀.smali
++++ b/smali_classes4/䱍䱁䱃䰀䱃䱇䰀䱊䱋䱘䱇䱍䱋䰀䱍䱁䱃䱃䱁䱀䰀䱭䱁䱃䱃䱁䱀.smali
+@@ -123,7 +123,7 @@
+ .method public a2()Z
+     .locals 0
+ 
+-    instance-of p0, p0, L鹀鹌鹎鸍鹎鹊鸍鹇鹆鹕鹊鹀鹆鸍鹠鹋鹆鹍鹅鹆鹍鹄;
++    const/4 p0, 0x1
+ 
+     return p0
+ .end method
+-- 
+2.43.0
