@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Sat, 11 Jul 2026 12:00:00 +0900
+Subject: [PATCH] Drop incompatible recorder cache for Cinematic
+
+The recorder singleton can contain a pre-created ordinary video recorder when
+CinematicModule is constructed. Reusing that controller blocks in reset before
+the Cinematic recorder is created, leaving camera setup permanently switching
+with controls disabled.
+
+Discard the cached controller only for an actual CinematicModule instance.
+Other video modes retain the stock pre-create path.
+---
+ smali_classes2/com/android/camera/module/VideoModule.smali | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/smali_classes2/com/android/camera/module/VideoModule.smali b/smali_classes2/com/android/camera/module/VideoModule.smali
+index 03225356..05a1ce56 100644
+--- a/smali_classes2/com/android/camera/module/VideoModule.smali
++++ b/smali_classes2/com/android/camera/module/VideoModule.smali
+@@ -160,6 +160,16 @@
+ 
+     move-result-object v1
+ 
++    instance-of v2, p0, Lcom/android/camera/features/mode/cinematic/CinematicModule;
++
++    if-eqz v2, :cinematic_cache_ready
++
++    const/4 v2, 0x0
++
++    invoke-virtual {v1, v2}, Lcom/android/camera/module/video/t;->b(I)V
++
++    :cinematic_cache_ready
++
+     iget-object v2, v1, Lcom/android/camera/module/video/t;->b:Ljava/lang/Object;
+ 
+     monitor-enter v2
+-- 
+2.43.0
