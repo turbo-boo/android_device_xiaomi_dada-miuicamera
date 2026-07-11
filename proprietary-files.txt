@@ -1,12 +1,6 @@
 # All unpinned blobs below are extracted from dada OS3.0.6.0.WOCMIXM
 
 product/priv-app/MiuiCamera/MiuiCamera.apk:system/priv-app/MiuiCamera/MiuiCamera.apk
-# Qigsaw's Movie/Cinematic recorder is delivered as an on-demand feature split.
-# Install it beside the base APK so PackageManager attaches it at boot instead
-# of leaving Movie initialization waiting for a network download. The split is
-# published separately from the stock image at the URL below.
-# https://cdn.cnbj1.fds.api.mi-img.com/plugin-apk/release/movielens/44.0.0@44/movielens-4eb3620e15ffe732cac290f4448eea14-20230926155329738.apk
-product/priv-app/MiuiCamera/split_movielens.apk:system/priv-app/MiuiCamera/split_movielens.apk|0f8c461b2885dd837e6069784a6d8bb86466685d|df8a0a0bbb72dcf3ca4e65af7e2d3dceae879580
 system_ext/lib64/libcamera_algoup_jni.xiaomi.so:system/lib64/libcamera_algoup_jni.xiaomi.so
 system_ext/lib64/libcamera_mianode_jni.xiaomi.so:system/lib64/libcamera_mianode_jni.xiaomi.so
 system_ext/lib64/libmicampostproc_client.so:system/lib64/libmicampostproc_client.so
