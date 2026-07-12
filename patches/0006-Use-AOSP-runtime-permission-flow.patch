@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Sun, 12 Jul 2026 17:15:00 +0900
+Subject: [PATCH] Use AOSP runtime permission flow
+
+HyperOS delegates its first-use CTA to SecurityCenter. AOSP has no handler for
+that intent, leaving mIsNewCTAShowing set and causing every later camera setup
+to be skipped. Mark the vendor CTA as already handled so Camera continues with
+its normal Android runtime-permission checks.
+---
+ smali_classes4/da/a.smali | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/smali_classes4/da/a.smali b/smali_classes4/da/a.smali
+index ea917446..0d07e216 100644
+--- a/smali_classes4/da/a.smali
++++ b/smali_classes4/da/a.smali
+@@ -221,6 +221,10 @@
+ .method public final c()Z
+     .locals 2
+ 
++    const/4 p0, 0x1
++
++    return p0
++
+     invoke-static {}, Lka/d;->a()Lka/a;
+ 
+     move-result-object p0
+-- 
+2.43.0
