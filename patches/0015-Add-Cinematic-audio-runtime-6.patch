@@ -1,0 +1,387 @@
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioWindscreen.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioWindscreen.smali
+new file mode 100644
+index 0000000..63bd83a
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioWindscreen.smali
+@@ -0,0 +1,22 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AudioWindscreen;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioWindscreen"
++.end annotation
++
++
++# virtual methods
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoom.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoom.smali
+new file mode 100644
+index 0000000..fd0616a
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoom.smali
+@@ -0,0 +1,37 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioZoom"
++.end annotation
++
++
++# virtual methods
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
++
++.method public abstract setAzimuth(D)Z
++.end method
++
++.method public abstract setElevation(D)Z
++.end method
++
++.method public abstract setHeight(D)Z
++.end method
++
++.method public abstract setWidth(D)Z
++.end method
++
++.method public abstract setZoom(D)Z
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoomData.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoomData.smali
+new file mode 100644
+index 0000000..9662598
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioZoomData.smali
+@@ -0,0 +1,52 @@
++.class public Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x9
++    name = "AudioZoomData"
++.end annotation
++
++
++# instance fields
++.field public final azimuth:D
++
++.field public final elevation:D
++
++.field public final gain:D
++
++.field public final id:I
++
++
++# direct methods
++.method public constructor <init>(IDDD)V
++    .registers 8
++    .param p1, "id"    # I
++    .param p2, "gain"    # D
++    .param p4, "azimuth"    # D
++    .param p6, "elevation"    # D
++
++    .line 263
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 264
++    iput p1, p0, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;->id:I
++
++    .line 265
++    iput-wide p2, p0, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;->gain:D
++
++    .line 266
++    iput-wide p4, p0, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;->azimuth:D
++
++    .line 267
++    iput-wide p6, p0, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;->elevation:D
++
++    .line 268
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$EventListener.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$EventListener.smali
+new file mode 100644
+index 0000000..27136f1
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$EventListener.smali
+@@ -0,0 +1,130 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "EventListener"
++.end annotation
++
++
++# virtual methods
++.method public onAudioFraming(IIII)V
++    .registers 7
++    .param p1, "azimuth"    # I
++    .param p2, "elevation"    # I
++    .param p3, "strength"    # I
++    .param p4, "id"    # I
++
++    .line 324
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onAudioFraming"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 325
++    return-void
++.end method
++
++.method public onAudioFramingSectors(IIIII)V
++    .registers 8
++    .param p1, "azimuth"    # I
++    .param p2, "elevation"    # I
++    .param p3, "width"    # I
++    .param p4, "height"    # I
++    .param p5, "id"    # I
++
++    .line 329
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onAudioFramingSectors"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 330
++    return-void
++.end method
++
++.method public onAudioLevel(II)V
++    .registers 5
++    .param p1, "left"    # I
++    .param p2, "right"    # I
++
++    .line 314
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onAudioLevel"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 315
++    return-void
++.end method
++
++.method public onAudioSourceTracking([Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;)V
++    .registers 4
++    .param p1, "sources"    # [Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++
++    .line 339
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onAudioSourceTracking"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 340
++    return-void
++.end method
++
++.method public onAudioZoom(Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;)V
++    .registers 4
++    .param p1, "data"    # Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;
++
++    .line 334
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onAudioZoom"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 335
++    return-void
++.end method
++
++.method public onMicBlocking(II)V
++    .registers 5
++    .param p1, "micIndex"    # I
++    .param p2, "level"    # I
++
++    .line 319
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onMicBlocking"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 320
++    return-void
++.end method
++
++.method public onWindLevel(I)V
++    .registers 4
++    .param p1, "level"    # I
++
++    .line 309
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for EventListener.onWindLevel"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 310
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$OzoAudioParams.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$OzoAudioParams.smali
+new file mode 100644
+index 0000000..45777da
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$OzoAudioParams.smali
+@@ -0,0 +1,115 @@
++.class public final Lcom/android/ozoaudio/lib/OzoAudio$OzoAudioParams;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x19
++    name = "OzoAudioParams"
++.end annotation
++
++
++# static fields
++.field public static final AST_AUTOMODE:Ljava/lang/String; = "auto"
++
++.field public static final AST_CREATE_SOURCE:Ljava/lang/String; = "ast-create-source"
++
++.field public static final AST_CREATION_SENSITIVITY:Ljava/lang/String; = "ast-creation-sensitivity"
++
++.field public static final AST_DEACTIVATION_DELAY:Ljava/lang/String; = "ast-deactivation-delay"
++
++.field public static final AST_DEVICE_ORIENTATION:Ljava/lang/String; = "ast-device-orientation"
++
++.field public static final AST_FOCUS_AUTOGAIN:Ljava/lang/String; = "ast-focus-autogain"
++
++.field public static final AST_FOCUS_HEIGHT:Ljava/lang/String; = "ast-focus-height"
++
++.field public static final AST_FOCUS_START:Ljava/lang/String; = "ast-focus-start"
++
++.field public static final AST_FOCUS_STOP:Ljava/lang/String; = "ast-focus-stop"
++
++.field public static final AST_FOCUS_WIDTH:Ljava/lang/String; = "ast-focus-width"
++
++.field public static final AST_MAX_SOURCES:Ljava/lang/String; = "ast-max-sources"
++
++.field public static final AST_MODE:Ljava/lang/String; = "ast-mode"
++
++.field public static final AST_NOISE_TOLERANCE:Ljava/lang/String; = "ast-noise-tolerance"
++
++.field public static final AST_NOTIFICATION:Ljava/lang/String; = "ast"
++
++.field public static final AST_REMOVAL_DELAY:Ljava/lang/String; = "ast-removal-delay"
++
++.field public static final AST_REMOVE_SOURCE:Ljava/lang/String; = "ast-remove-source"
++
++.field public static final AST_RESET_SOURCES:Ljava/lang/String; = "ast-reset-sources"
++
++.field public static final AST_SOURCE_STABILITY:Ljava/lang/String; = "ast-source-stability"
++
++.field public static final AST_VISUAL_START:Ljava/lang/String; = "ast-visual-start"
++
++.field public static final AST_VISUAL_UPDATE:Ljava/lang/String; = "ast-visual-update"
++
++.field public static final AUDIOLEVELS_NOTIFICATION:Ljava/lang/String; = "audiolevels"
++
++.field public static final CONTROL_PARAM:Ljava/lang/String; = "control"
++
++.field public static final DEFAULT_AZIMUTH:D = 0.0
++
++.field public static final DEFAULT_ELEVATION:D = 0.0
++
++.field public static final DEFAULT_GAIN:D = 3.0
++
++.field public static final DISABLED:Ljava/lang/String; = "off"
++
++.field public static final DUMMY:Ljava/lang/String; = "-"
++
++.field public static final ENABLED:Ljava/lang/String; = "on"
++
++.field public static final FEAT_CUSTOM:Ljava/lang/String; = "custom"
++
++.field public static final FEAT_NOISEREDUCTION:Ljava/lang/String; = "ns"
++
++.field public static final FEAT_NOISESUPPRESSIONGAIN:Ljava/lang/String; = "ns-gain"
++
++.field public static final FEAT_WINDSCREEN:Ljava/lang/String; = "wnr"
++
++.field public static final FEAT_ZOOM:Ljava/lang/String; = "zoom"
++
++.field public static final FRAMING_NOTIFICATION:Ljava/lang/String; = "audioframing"
++
++.field public static final HIGH_GAIN:D = 4.0
++
++.field public static final LOW_GAIN:D = 2.0
++
++.field public static final MAX_GAIN:D = 5.0
++
++.field public static final MICBLOCKING_NOTIFICATION:Ljava/lang/String; = "micblocking"
++
++.field public static final MIN_GAIN:D = 1.0
++
++.field public static final NOTIFICATION_PARAM:Ljava/lang/String; = "notification"
++
++.field public static final NS_INTELLIGENT:Ljava/lang/String; = "smart"
++
++.field public static final WINDSCREEN_NOTIFICATION:Ljava/lang/String; = "wnr"
++
++.field public static final ZERO_GAIN:D = 0.0
++
++.field public static final ZOOM_NOTIFICATION:Ljava/lang/String; = "zoom"
++
++
++# direct methods
++.method private constructor <init>()V
++    .registers 1
++
++    .line 71
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
+

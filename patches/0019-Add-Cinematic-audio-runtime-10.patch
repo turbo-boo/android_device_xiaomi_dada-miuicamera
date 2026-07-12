@@ -1,0 +1,2430 @@
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoAudioQueryParams.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoAudioQueryParams.smali
+new file mode 100644
+index 0000000..c60d841
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoAudioQueryParams.smali
+@@ -0,0 +1,53 @@
++.class final Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoAudioQueryParams;
++.super Ljava/lang/Object;
++.source "OzoAudioImpl.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudioImpl;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x1a
++    name = "OzoAudioQueryParams"
++.end annotation
++
++
++# static fields
++.field public static final AI_INTELLIGENTNOISE_PERM:Ljava/lang/String; = "12"
++
++.field public static final AMBIENTNOISE_PERM:Ljava/lang/String; = "5"
++
++.field public static final AUDIOFRAMING_PERM:Ljava/lang/String; = "1"
++
++.field public static final AUDIOSOURCETRACKING_PERM:Ljava/lang/String; = "11"
++
++.field public static final AUDIOZOOM_PERM:Ljava/lang/String; = "2"
++
++.field public static final CUSTOMPROC_PERM:Ljava/lang/String; = "9"
++
++.field public static final INTELLIGENTNOISE_PERM:Ljava/lang/String; = "6"
++
++.field public static final LEVELINDICATION_PERM:Ljava/lang/String; = "10"
++
++.field public static final MICBLOCKING_PERM:Ljava/lang/String; = "7"
++
++.field public static final PERMISSIONS_QUERY_KEY:I = 0x0
++
++.field public static final PERMISSIONS_RELEASE_KEY:I = 0x1
++
++.field public static final TUNE_PERM:Ljava/lang/String; = "8"
++
++.field public static final WINDSCREEN_PERM:Ljava/lang/String; = "0"
++
++
++# direct methods
++.method private constructor <init>()V
++    .registers 1
++
++    .line 570
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoTune.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoTune.smali
+new file mode 100644
+index 0000000..c28907a
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl$OzoTune.smali
+@@ -0,0 +1,204 @@
++.class Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++.super Lcom/android/ozoaudio/notify/IOzoTuneCb$Stub;
++.source "OzoAudioImpl.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudioImpl;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x2
++    name = "OzoTune"
++.end annotation
++
++
++# instance fields
++.field final synthetic this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++
++# direct methods
++.method constructor <init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;)V
++    .registers 3
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Ljava/io/IOException;
++        }
++    .end annotation
++
++    .line 922
++    iput-object p1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;->this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-direct {p0}, Lcom/android/ozoaudio/notify/IOzoTuneCb$Stub;-><init>()V
++
++    .line 923
++    const-string p1, "OzoAudio"
++
++    const-string v0, "OzoTune() create."
++
++    invoke-static {p1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 924
++    return-void
++.end method
++
++
++# virtual methods
++.method public declared-synchronized getInterfaceHash()Ljava/lang/String;
++    .registers 2
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    monitor-enter p0
++
++    .line 928
++    :try_start_1
++    const-string/jumbo v0, "tune-hash"
++    :try_end_4
++    .catchall {:try_start_1 .. :try_end_4} :catchall_6
++
++    monitor-exit p0
++
++    return-object v0
++
++    .line 928
++    .end local p0    # "this":Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++    :catchall_6
++    move-exception v0
++
++    :try_start_7
++    monitor-exit p0
++    :try_end_8
++    .catchall {:try_start_7 .. :try_end_8} :catchall_6
++
++    throw v0
++.end method
++
++.method public getInterfaceVersion()I
++    .registers 2
++
++    .line 933
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method public onTuneCtrl([B)V
++    .registers 4
++    .param p1, "data"    # [B
++
++    .line 946
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "onTuneCtrl() "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    array-length v1, p1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " bytes"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "OzoAudio"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 947
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;->this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-static {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->-$$Nest$fgetmTuneListener(Lcom/android/ozoaudio/lib/OzoAudioImpl;)Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    move-result-object v0
++
++    if-eqz v0, :cond_30
++
++    .line 948
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;->this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-static {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->-$$Nest$fgetmTuneListener(Lcom/android/ozoaudio/lib/OzoAudioImpl;)Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    move-result-object v0
++
++    invoke-interface {v0, p1}, Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;->onTuneCtrlData([B)V
++
++    .line 950
++    :cond_30
++    return-void
++.end method
++
++.method public onTuneData([B)V
++    .registers 4
++    .param p1, "data"    # [B
++
++    .line 938
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "onTuneData() "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    array-length v1, p1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " bytes"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "OzoAudio"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 939
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;->this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-static {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->-$$Nest$fgetmTuneListener(Lcom/android/ozoaudio/lib/OzoAudioImpl;)Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    move-result-object v0
++
++    if-eqz v0, :cond_30
++
++    .line 940
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;->this$0:Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-static {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->-$$Nest$fgetmTuneListener(Lcom/android/ozoaudio/lib/OzoAudioImpl;)Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    move-result-object v0
++
++    invoke-interface {v0, p1}, Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;->onTuneAudioData([B)V
++
++    .line 942
++    :cond_30
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl-IA.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl-IA.smali
+new file mode 100644
+index 0000000..2096522
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl-IA.smali
+@@ -0,0 +1,3 @@
++.class public final synthetic Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;
++.super Ljava/lang/Object;
++.source "D8$$SyntheticClass"
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl.smali
+new file mode 100644
+index 0000000..5fd2c8f
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudioImpl.smali
+@@ -0,0 +1,2145 @@
++.class public Lcom/android/ozoaudio/lib/OzoAudioImpl;
++.super Lcom/android/ozoaudio/notify/IOzoCb$Stub;
++.source "OzoAudioImpl.java"
++
++# interfaces
++.implements Lcom/android/ozoaudio/lib/OzoAudio;
++
++
++# annotations
++.annotation system Ldalvik/annotation/MemberClasses;
++    value = {
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioSourceTrackingImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoAudioQueryParams;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoAudioEventParams;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioZoomImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioWindscreenImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AGCImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioNoiseReductionImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioCustomProcessingImpl;,
++        Lcom/android/ozoaudio/lib/OzoAudioImpl$DataValidator;
++    }
++.end annotation
++
++
++# static fields
++.field public static final FEAT_AGC:Ljava/lang/String; = "agc"
++
++.field public static final FEAT_AGCUSERGAIN:Ljava/lang/String; = "agc-usergain"
++
++.field public static final FEAT_AGC_AUTOMODE:Ljava/lang/String; = "auto"
++
++.field public static final FEAT_AGC_USERMODE:Ljava/lang/String; = "user"
++
++.field private static final FEAT_FOCUS:Ljava/lang/String; = "focus"
++
++.field private static final FEAT_FOCUSAZIMUTH:Ljava/lang/String; = "focus-azimuth"
++
++.field private static final FEAT_FOCUSELEVATION:Ljava/lang/String; = "focus-elevation"
++
++.field private static final FEAT_FOCUSHEIGHT:Ljava/lang/String; = "focus-height"
++
++.field private static final FEAT_FOCUSWIDTH:Ljava/lang/String; = "focus-width"
++
++.field private static final MAX_ZOOM_BEAMS:I = 0x2
++
++.field private static final TAG:Ljava/lang/String; = "OzoAudio"
++
++
++# instance fields
++.field private mAST:Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++
++.field private mAgc:Lcom/android/ozoaudio/lib/OzoAudio$AGC;
++
++.field private mCodecProxy:Lcom/android/ozoaudio/notify/IOzoCodec;
++
++.field private mCustomProc:Lcom/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing;
++
++.field private mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++.field private mInitConfiguration:Ljava/lang/String;
++
++.field private mInitialized:Z
++
++.field private mNs:Lcom/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction;
++
++.field private mOzoEffect:Z
++
++.field private mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++.field private mSessionId:I
++
++.field private mTune:Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++
++.field private mTuneListener:Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++.field private mUUIDAvailable:Z
++
++.field private mWnr:Lcom/android/ozoaudio/lib/OzoAudio$AudioWindscreen;
++
++.field private mZoom:[Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++
++
++# direct methods
++.method static bridge synthetic -$$Nest$fgetmTuneListener(Lcom/android/ozoaudio/lib/OzoAudioImpl;)Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++    .registers 1
++
++    iget-object p0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTuneListener:Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    return-object p0
++.end method
++
++.method static bridge synthetic -$$Nest$msetValue(Lcom/android/ozoaudio/lib/OzoAudioImpl;Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 3
++
++    invoke-direct {p0, p1, p2}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setValue(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method private constructor <init>()V
++    .registers 6
++
++    .line 1019
++    invoke-direct {p0}, Lcom/android/ozoaudio/notify/IOzoCb$Stub;-><init>()V
++
++    .line 54
++    const/4 v0, 0x0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    .line 55
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTuneListener:Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    .line 56
++    const/4 v1, 0x0
++
++    iput-boolean v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mOzoEffect:Z
++
++    .line 58
++    const-string v2, ""
++
++    iput-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 59
++    iput-boolean v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mUUIDAvailable:Z
++
++    .line 60
++    iput-boolean v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    .line 1021
++    const/4 v1, 0x2
++
++    new-array v2, v1, [Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioZoomImpl;
++
++    iput-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mZoom:[Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++
++    .line 1022
++    const/4 v2, 0x0
++
++    .local v2, "i":I
++    :goto_19
++    if-ge v2, v1, :cond_27
++
++    .line 1023
++    iget-object v3, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mZoom:[Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++
++    new-instance v4, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioZoomImpl;
++
++    invoke-direct {v4, p0, v2, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioZoomImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;ILcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    aput-object v4, v3, v2
++
++    .line 1022
++    add-int/lit8 v2, v2, 0x1
++
++    goto :goto_19
++
++    .line 1025
++    .end local v2    # "i":I
++    :cond_27
++    new-instance v1, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioWindscreenImpl;
++
++    invoke-direct {v1, p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioWindscreenImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    iput-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mWnr:Lcom/android/ozoaudio/lib/OzoAudio$AudioWindscreen;
++
++    .line 1026
++    new-instance v1, Lcom/android/ozoaudio/lib/OzoAudioImpl$AGCImpl;
++
++    invoke-direct {v1, p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AGCImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    iput-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mAgc:Lcom/android/ozoaudio/lib/OzoAudio$AGC;
++
++    .line 1027
++    new-instance v1, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioNoiseReductionImpl;
++
++    invoke-direct {v1, p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioNoiseReductionImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    iput-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mNs:Lcom/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction;
++
++    .line 1028
++    new-instance v1, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioCustomProcessingImpl;
++
++    invoke-direct {v1, p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioCustomProcessingImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    iput-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mCustomProc:Lcom/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing;
++
++    .line 1029
++    return-void
++.end method
++
++.method public static create(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;)Lcom/android/ozoaudio/lib/OzoAudio;
++    .registers 3
++    .param p0, "eventlistener"    # Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 1032
++    const-string v0, "OzoAudio"
++
++    const-string v1, "OzoAudio create(eventlistener)."
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 1033
++    new-instance v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-direct {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;-><init>()V
++
++    .line 1034
++    .local v0, "instance":Lcom/android/ozoaudio/lib/OzoAudioImpl;
++    invoke-direct {v0, p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setListener(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;)V
++
++    .line 1035
++    return-object v0
++.end method
++
++.method public static create(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;)Lcom/android/ozoaudio/lib/OzoAudio;
++    .registers 4
++    .param p0, "eventlistener"    # Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++    .param p1, "tunelistener"    # Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 1039
++    const-string v0, "OzoAudio"
++
++    const-string v1, "OzoAudio create(eventlistener, tunelistener)."
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 1040
++    new-instance v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-direct {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;-><init>()V
++
++    .line 1041
++    .local v0, "instance":Lcom/android/ozoaudio/lib/OzoAudioImpl;
++    invoke-direct {v0, p0, p1}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setListener(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;)V
++
++    .line 1042
++    return-object v0
++.end method
++
++.method private enableTune()Z
++    .registers 5
++
++    .line 960
++    const-string v0, "OzoAudio"
++
++    const/4 v1, 0x0
++
++    :try_start_3
++    iget-boolean v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    const/4 v3, 0x1
++
++    if-ne v2, v3, :cond_e
++
++    .line 961
++    const-string v2, "Ozo processing already initialized, invalid call"
++
++    invoke-static {v0, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 962
++    return v1
++
++    .line 965
++    :cond_e
++    iget-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTune:Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++
++    if-eqz v2, :cond_18
++
++    .line 966
++    const-string v2, "Tune already enabled"
++
++    invoke-static {v0, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 967
++    return v1
++
++    .line 969
++    :cond_18
++    new-instance v2, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++
++    invoke-direct {v2, p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;)V
++
++    iput-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTune:Lcom/android/ozoaudio/lib/OzoAudioImpl$OzoTune;
++    :try_end_1f
++    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_1f} :catch_21
++
++    .line 974
++    nop
++
++    .line 976
++    return v3
++
++    .line 971
++    :catch_21
++    move-exception v2
++
++    .line 972
++    .local v2, "e":Ljava/lang/Exception;
++    const-string v3, "enableTune() failed: "
++
++    invoke-static {v0, v3, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 973
++    return v1
++.end method
++
++.method public static getFeaturePermissions()Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++    .registers 1
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 1046
++    new-instance v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    invoke-direct {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;-><init>()V
++
++    invoke-direct {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->serviceSetup()Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermissions()Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++
++    move-result-object v0
++
++    return-object v0
++.end method
++
++.method private getPermission(Ljava/lang/String;)Z
++    .registers 5
++    .param p1, "permission"    # Ljava/lang/String;
++
++    .line 680
++    const/4 v0, 0x0
++
++    .line 681
++    .local v0, "key":I
++    :try_start_1
++    iget-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    invoke-interface {v1, v0, p1}, Lcom/android/ozoaudio/notify/IOzoNotify;->doQuery(ILjava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    .line 682
++    .local v1, "resultVal":Ljava/lang/String;
++    const-string/jumbo v2, "true"
++
++    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++    :try_end_e
++    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_e} :catch_f
++
++    return v2
++
++    .line 683
++    .end local v0    # "key":I
++    .end local v1    # "resultVal":Ljava/lang/String;
++    :catch_f
++    move-exception v0
++
++    .line 684
++    .local v0, "e":Ljava/lang/Exception;
++    const-string v1, "OzoAudio"
++
++    const-string v2, "getPermission failed: "
++
++    invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 687
++    .end local v0    # "e":Ljava/lang/Exception;
++    const/4 v0, 0x0
++
++    return v0
++.end method
++
++.method private prepareCallback()V
++    .registers 3
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 734
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    iget v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    invoke-interface {v0, v1, p0}, Lcom/android/ozoaudio/notify/IOzoNotify;->setCallback(ILcom/android/ozoaudio/notify/IOzoCb;)I
++
++    .line 735
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    iget v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    invoke-interface {v0, v1}, Lcom/android/ozoaudio/notify/IOzoNotify;->getCodecProxy(I)Lcom/android/ozoaudio/notify/IOzoCodec;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mCodecProxy:Lcom/android/ozoaudio/notify/IOzoCodec;
++
++    .line 736
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "Ozo session id: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    iget v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "OzoAudio"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 737
++    return-void
++.end method
++
++.method private serviceSetup()Lcom/android/ozoaudio/lib/OzoAudioImpl;
++    .registers 3
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 725
++    nop
++
++    .line 726
++    const-string v0, "com.android.ozoaudio.notify.IOzoNotify/default"
++
++    invoke-static {v0}, Landroid/os/ServiceManager;->waitForDeclaredService(Ljava/lang/String;)Landroid/os/IBinder;
++
++    move-result-object v0
++
++    .line 725
++    invoke-static {v0}, Lcom/android/ozoaudio/notify/IOzoNotify$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    .line 729
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Setup done"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 730
++    return-object p0
++.end method
++
++.method private setControlInitParameter(Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 7
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++
++    .line 873
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_e
++
++    .line 874
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Ozo processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 875
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 878
++    :cond_e
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "control="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, "="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, ";"
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 879
++    .local v0, "str":Ljava/lang/String;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v3, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    iput-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 880
++    return v1
++.end method
++
++.method private setListener(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;)V
++    .registers 3
++    .param p1, "eventlistener"    # Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 741
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->serviceSetup()Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    .line 742
++    iput-object p1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    .line 743
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    invoke-interface {v0}, Lcom/android/ozoaudio/notify/IOzoNotify;->createId()I
++
++    move-result v0
++
++    iput v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    .line 744
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->prepareCallback()V
++
++    .line 745
++    return-void
++.end method
++
++.method private setListener(Lcom/android/ozoaudio/lib/OzoAudio$EventListener;Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;)V
++    .registers 4
++    .param p1, "eventlistener"    # Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++    .param p2, "tunelistener"    # Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 748
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->serviceSetup()Lcom/android/ozoaudio/lib/OzoAudioImpl;
++
++    .line 749
++    iput-object p1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    .line 750
++    iput-object p2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTuneListener:Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    .line 751
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    invoke-interface {v0}, Lcom/android/ozoaudio/notify/IOzoNotify;->createId()I
++
++    move-result v0
++
++    iput v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    .line 752
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->prepareCallback()V
++
++    .line 753
++    return-void
++.end method
++
++.method private setNotificationParameter(Ljava/lang/String;)Z
++    .registers 6
++    .param p1, "notification"    # Ljava/lang/String;
++
++    .line 890
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_e
++
++    .line 891
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Ozo processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 892
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 895
++    :cond_e
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "notification="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, ";"
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 896
++    .local v0, "str":Ljava/lang/String;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v3, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    iput-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 897
++    return v1
++.end method
++
++.method private setRuntimeControlParameter(Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 6
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 908
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    if-nez v0, :cond_d
++
++    .line 909
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Ozo processing not initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 910
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 914
++    :cond_d
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mCodecProxy:Lcom/android/ozoaudio/notify/IOzoCodec;
++
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    invoke-virtual {v1, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v2, "="
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-interface {v0, v1}, Lcom/android/ozoaudio/notify/IOzoCodec;->setParameter(Ljava/lang/String;)V
++
++    .line 915
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method private setValue(Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 6
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++
++    .line 494
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    if-nez v0, :cond_9
++
++    .line 495
++    invoke-direct {p0, p1, p2}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setControlInitParameter(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++
++    return v0
++
++    .line 499
++    :cond_9
++    :try_start_9
++    invoke-direct {p0, p1, p2}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setRuntimeControlParameter(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++    :try_end_d
++    .catch Ljava/lang/Exception; {:try_start_9 .. :try_end_d} :catch_e
++
++    return v0
++
++    .line 500
++    :catch_e
++    move-exception v0
++
++    .line 501
++    .local v0, "e":Ljava/lang/Exception;
++    const-string/jumbo v1, "setValue (%s,%s) failed: "
++
++    filled-new-array {p1, p2}, [Ljava/lang/Object;
++
++    move-result-object v2
++
++    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "OzoAudio"
++
++    invoke-static {v2, v1, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 504
++    .end local v0    # "e":Ljava/lang/Exception;
++    const/4 v0, 0x0
++
++    return v0
++.end method
++
++
++# virtual methods
++.method public getAGCControl()Lcom/android/ozoaudio/lib/OzoAudio$AGC;
++    .registers 2
++
++    .line 630
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mAgc:Lcom/android/ozoaudio/lib/OzoAudio$AGC;
++
++    return-object v0
++.end method
++
++.method public getASTControl()Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++    .registers 2
++
++    .line 645
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mAST:Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++
++    return-object v0
++.end method
++
++.method public getCustomProcessingControl()Lcom/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing;
++    .registers 2
++
++    .line 640
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mCustomProc:Lcom/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing;
++
++    return-object v0
++.end method
++
++.method public declared-synchronized getInterfaceHash()Ljava/lang/String;
++    .registers 2
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    monitor-enter p0
++
++    .line 1010
++    :try_start_1
++    const-string v0, "hash"
++    :try_end_3
++    .catchall {:try_start_1 .. :try_end_3} :catchall_5
++
++    monitor-exit p0
++
++    return-object v0
++
++    .line 1010
++    .end local p0    # "this":Lcom/android/ozoaudio/lib/OzoAudioImpl;
++    :catchall_5
++    move-exception v0
++
++    :try_start_6
++    monitor-exit p0
++    :try_end_7
++    .catchall {:try_start_6 .. :try_end_7} :catchall_5
++
++    throw v0
++.end method
++
++.method public getInterfaceVersion()I
++    .registers 2
++
++    .line 1015
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method public getNoiseReductionControl()Lcom/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction;
++    .registers 2
++
++    .line 635
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mNs:Lcom/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction;
++
++    return-object v0
++.end method
++
++.method public getPermissions()Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++    .registers 13
++
++    .line 650
++    new-instance v0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++
++    .line 651
++    const-string v1, "2"
++
++    invoke-direct {p0, v1}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v1
++
++    .line 652
++    const-string v2, "0"
++
++    invoke-direct {p0, v2}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v2
++
++    .line 653
++    const-string v3, "1"
++
++    invoke-direct {p0, v3}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v3
++
++    .line 654
++    const-string v4, "7"
++
++    invoke-direct {p0, v4}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v4
++
++    .line 655
++    const-string v5, "5"
++
++    invoke-direct {p0, v5}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v5
++
++    .line 656
++    const-string v6, "6"
++
++    invoke-direct {p0, v6}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v6
++
++    .line 657
++    const-string v7, "12"
++
++    invoke-direct {p0, v7}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v7
++
++    .line 658
++    const-string v8, "9"
++
++    invoke-direct {p0, v8}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v8
++
++    .line 659
++    const-string v9, "11"
++
++    invoke-direct {p0, v9}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v9
++
++    .line 660
++    const-string v10, "10"
++
++    invoke-direct {p0, v10}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v10
++
++    .line 661
++    const-string v11, "8"
++
++    invoke-direct {p0, v11}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getPermission(Ljava/lang/String;)Z
++
++    move-result v11
++
++    invoke-direct/range {v0 .. v11}, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;-><init>(ZZZZZZZZZZZ)V
++
++    move-object v1, v0
++
++    .line 666
++    .local v1, "perms":Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++    :try_start_48
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    const-string v2, ""
++
++    const/4 v3, 0x1
++
++    invoke-interface {v0, v3, v2}, Lcom/android/ozoaudio/notify/IOzoNotify;->doQuery(ILjava/lang/String;)Ljava/lang/String;
++    :try_end_50
++    .catch Ljava/lang/Exception; {:try_start_48 .. :try_end_50} :catch_51
++
++    goto :goto_52
++
++    .line 667
++    :catch_51
++    move-exception v0
++
++    :goto_52
++    nop
++
++    .line 669
++    return-object v1
++.end method
++
++.method public getSessionId()I
++    .registers 2
++
++    .line 697
++    iget v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    return v0
++.end method
++
++.method public getSessionIdMediaRecorderParameter()Ljava/lang/String;
++    .registers 3
++
++    .line 702
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "ozo-session-id="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->getSessionId()I
++
++    move-result v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    return-object v0
++.end method
++
++.method public getWindscreenControl()Lcom/android/ozoaudio/lib/OzoAudio$AudioWindscreen;
++    .registers 2
++
++    .line 625
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mWnr:Lcom/android/ozoaudio/lib/OzoAudio$AudioWindscreen;
++
++    return-object v0
++.end method
++
++.method public getZoomControl(I)Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++    .registers 3
++    .param p1, "zoomBeamIndex"    # I
++
++    .line 617
++    if-ltz p1, :cond_b
++
++    const/4 v0, 0x2
++
++    if-lt p1, v0, :cond_6
++
++    goto :goto_b
++
++    .line 620
++    :cond_6
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mZoom:[Lcom/android/ozoaudio/lib/OzoAudio$AudioZoom;
++
++    aget-object v0, v0, p1
++
++    return-object v0
++
++    .line 618
++    :cond_b
++    :goto_b
++    const/4 v0, 0x0
++
++    return-object v0
++.end method
++
++.method public onData(ILjava/lang/String;)V
++    .registers 26
++    .param p1, "id"    # I
++    .param p2, "data"    # Ljava/lang/String;
++
++    .line 760
++    move-object/from16 v0, p0
++
++    move/from16 v1, p1
++
++    move-object/from16 v2, p2
++
++    iget-object v3, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    if-eqz v3, :cond_1a9
++
++    .line 762
++    const v3, 0x7f100001
++
++    if-ne v1, v3, :cond_1a
++
++    .line 763
++    iget-object v3, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    invoke-static {v2}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v4
++
++    invoke-interface {v3, v4}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onWindLevel(I)V
++
++    goto/16 :goto_1a9
++
++    .line 766
++    :cond_1a
++    const v3, 0x7f100005
++
++    const/4 v4, 0x0
++
++    const-string v5, " "
++
++    const/4 v6, 0x1
++
++    if-ne v1, v3, :cond_3a
++
++    .line 767
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 768
++    .local v3, "levels":[Ljava/lang/String;
++    iget-object v5, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    aget-object v4, v3, v4
++
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v4
++
++    aget-object v6, v3, v6
++
++    invoke-static {v6}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v6
++
++    invoke-interface {v5, v4, v6}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onAudioLevel(II)V
++
++    .line 769
++    .end local v3    # "levels":[Ljava/lang/String;
++    goto/16 :goto_1a9
++
++    .line 772
++    :cond_3a
++    const v3, 0x7f100006
++
++    if-ne v1, v3, :cond_56
++
++    .line 773
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 774
++    .local v3, "micData":[Ljava/lang/String;
++    iget-object v5, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    aget-object v4, v3, v4
++
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v4
++
++    aget-object v6, v3, v6
++
++    invoke-static {v6}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v6
++
++    invoke-interface {v5, v4, v6}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onMicBlocking(II)V
++
++    .line 775
++    .end local v3    # "micData":[Ljava/lang/String;
++    goto/16 :goto_1a9
++
++    .line 778
++    :cond_56
++    const v3, 0x7f100002
++
++    const/4 v7, 0x3
++
++    const/4 v8, 0x2
++
++    if-ne v1, v3, :cond_80
++
++    .line 779
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 780
++    .local v3, "framingData":[Ljava/lang/String;
++    iget-object v5, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    aget-object v4, v3, v4
++
++    .line 781
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v4
++
++    aget-object v6, v3, v6
++
++    invoke-static {v6}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v6
++
++    aget-object v8, v3, v8
++
++    .line 782
++    invoke-static {v8}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v8
++
++    aget-object v7, v3, v7
++
++    invoke-static {v7}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v7
++
++    .line 780
++    invoke-interface {v5, v4, v6, v8, v7}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onAudioFraming(IIII)V
++
++    .line 784
++    .end local v3    # "framingData":[Ljava/lang/String;
++    goto/16 :goto_1a9
++
++    .line 787
++    :cond_80
++    const v3, 0x7f100003
++
++    if-ne v1, v3, :cond_af
++
++    .line 788
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 789
++    .local v3, "sectorData":[Ljava/lang/String;
++    iget-object v9, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    aget-object v4, v3, v4
++
++    .line 790
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v10
++
++    aget-object v4, v3, v6
++
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v11
++
++    aget-object v4, v3, v8
++
++    .line 791
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v12
++
++    aget-object v4, v3, v7
++
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v13
++
++    const/4 v4, 0x4
++
++    aget-object v4, v3, v4
++
++    .line 792
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v14
++
++    .line 789
++    invoke-interface/range {v9 .. v14}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onAudioFramingSectors(IIIII)V
++
++    .line 794
++    .end local v3    # "sectorData":[Ljava/lang/String;
++    goto/16 :goto_1a9
++
++    .line 797
++    :cond_af
++    const v3, 0x7f100007
++
++    if-ne v1, v3, :cond_dc
++
++    .line 798
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 799
++    .local v3, "zoomData":[Ljava/lang/String;
++    iget-object v5, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    new-instance v9, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;
++
++    aget-object v4, v3, v4
++
++    .line 800
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v10
++
++    aget-object v4, v3, v6
++
++    invoke-static {v4}, Ljava/lang/Double;->parseDouble(Ljava/lang/String;)D
++
++    move-result-wide v11
++
++    aget-object v4, v3, v8
++
++    .line 801
++    invoke-static {v4}, Ljava/lang/Double;->parseDouble(Ljava/lang/String;)D
++
++    move-result-wide v13
++
++    aget-object v4, v3, v7
++
++    invoke-static {v4}, Ljava/lang/Double;->parseDouble(Ljava/lang/String;)D
++
++    move-result-wide v15
++
++    invoke-direct/range {v9 .. v16}, Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;-><init>(IDDD)V
++
++    .line 799
++    invoke-interface {v5, v9}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onAudioZoom(Lcom/android/ozoaudio/lib/OzoAudio$AudioZoomData;)V
++
++    .line 803
++    .end local v3    # "zoomData":[Ljava/lang/String;
++    goto/16 :goto_1a9
++
++    .line 806
++    :cond_dc
++    const v3, 0x7f100008
++
++    if-ne v1, v3, :cond_189
++
++    .line 807
++    invoke-virtual {v2, v5}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 808
++    .local v3, "astData":[Ljava/lang/String;
++    aget-object v4, v3, v4
++
++    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v4
++
++    .line 809
++    .local v4, "nSources":I
++    new-array v5, v4, [Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++
++    .line 811
++    .local v5, "sources":[Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++    const/4 v7, 0x1
++
++    .line 812
++    .local v7, "offset":I
++    const/4 v8, 0x0
++
++    .local v8, "i":I
++    :goto_ef
++    if-ge v8, v4, :cond_183
++
++    .line 813
++    new-instance v9, Ljava/util/ArrayList;
++
++    const/16 v10, 0x8
++
++    invoke-direct {v9, v10}, Ljava/util/ArrayList;-><init>(I)V
++
++    .line 816
++    .local v9, "objectCategories":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Integer;>;>;"
++    const/4 v11, 0x0
++
++    .line 817
++    .local v11, "offset2":I
++    const/4 v12, 0x0
++
++    move/from16 v22, v11
++
++    .end local v11    # "offset2":I
++    .local v12, "j":I
++    .local v22, "offset2":I
++    :goto_fc
++    if-ge v12, v10, :cond_13b
++
++    .line 818
++    new-instance v11, Ljava/util/ArrayList;
++
++    invoke-direct {v11}, Ljava/util/ArrayList;-><init>()V
++
++    invoke-virtual {v9, v11}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 819
++    invoke-virtual {v9, v12}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
++
++    move-result-object v11
++
++    check-cast v11, Ljava/util/ArrayList;
++
++    add-int/lit8 v13, v7, 0x7
++
++    add-int v13, v13, v22
++
++    aget-object v13, v3, v13
++
++    invoke-static {v13}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v13
++
++    invoke-static {v13}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
++
++    move-result-object v13
++
++    invoke-virtual {v11, v13}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 820
++    add-int/lit8 v22, v22, 0x1
++
++    .line 821
++    invoke-virtual {v9, v12}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
++
++    move-result-object v11
++
++    check-cast v11, Ljava/util/ArrayList;
++
++    add-int/lit8 v13, v7, 0x7
++
++    add-int v13, v13, v22
++
++    aget-object v13, v3, v13
++
++    invoke-static {v13}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v13
++
++    invoke-static {v13}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
++
++    move-result-object v13
++
++    invoke-virtual {v11, v13}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 822
++    add-int/lit8 v22, v22, 0x1
++
++    .line 817
++    add-int/lit8 v12, v12, 0x1
++
++    goto :goto_fc
++
++    .line 825
++    .end local v12    # "j":I
++    :cond_13b
++    new-instance v11, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++
++    add-int/lit8 v10, v7, 0x0
++
++    aget-object v10, v3, v10
++
++    .line 826
++    invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v12
++
++    add-int/lit8 v10, v7, 0x1
++
++    aget-object v10, v3, v10
++
++    invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v13
++
++    add-int/lit8 v10, v7, 0x2
++
++    aget-object v10, v3, v10
++
++    .line 827
++    invoke-static {v10}, Ljava/lang/Double;->parseDouble(Ljava/lang/String;)D
++
++    move-result-wide v14
++
++    add-int/lit8 v10, v7, 0x3
++
++    aget-object v10, v3, v10
++
++    invoke-static {v10}, Ljava/lang/Double;->parseDouble(Ljava/lang/String;)D
++
++    move-result-wide v16
++
++    add-int/lit8 v10, v7, 0x4
++
++    aget-object v10, v3, v10
++
++    .line 828
++    invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v18
++
++    add-int/lit8 v10, v7, 0x5
++
++    aget-object v10, v3, v10
++
++    invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v19
++
++    add-int/lit8 v10, v7, 0x6
++
++    aget-object v10, v3, v10
++
++    .line 829
++    invoke-static {v10}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v20
++
++    move-object/from16 v21, v9
++
++    .end local v9    # "objectCategories":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Integer;>;>;"
++    .local v21, "objectCategories":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Integer;>;>;"
++    invoke-direct/range {v11 .. v21}, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;-><init>(IIDDIIILjava/util/ArrayList;)V
++
++    aput-object v11, v5, v8
++
++    .line 832
++    add-int/lit8 v9, v22, 0x7
++
++    add-int/2addr v7, v9
++
++    .line 812
++    .end local v21    # "objectCategories":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Integer;>;>;"
++    .end local v22    # "offset2":I
++    add-int/lit8 v8, v8, 0x1
++
++    goto/16 :goto_ef
++
++    .line 835
++    .end local v8    # "i":I
++    :cond_183
++    iget-object v6, v0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mEventListener:Lcom/android/ozoaudio/lib/OzoAudio$EventListener;
++
++    invoke-interface {v6, v5}, Lcom/android/ozoaudio/lib/OzoAudio$EventListener;->onAudioSourceTracking([Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;)V
++
++    .line 836
++    .end local v3    # "astData":[Ljava/lang/String;
++    .end local v4    # "nSources":I
++    .end local v5    # "sources":[Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++    .end local v7    # "offset":I
++    goto :goto_1a9
++
++    .line 839
++    :cond_189
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v4, "onData() unknown event: "
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++
++    const-string v4, "OzoAudio"
++
++    invoke-static {v4, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 841
++    :cond_1a9
++    :goto_1a9
++    return-void
++.end method
++
++.method public prepare()Z
++    .registers 4
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 981
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    const/4 v2, 0x0
++
++    if-ne v0, v1, :cond_e
++
++    .line 982
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Ozo processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 983
++    return v2
++
++    .line 986
++    :cond_e
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mTuneListener:Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++    if-eqz v0, :cond_19
++
++    .line 987
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->enableTune()Z
++
++    move-result v0
++
++    if-nez v0, :cond_19
++
++    .line 988
++    return v2
++
++    .line 991
++    :cond_19
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    iget v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    iget-object v2, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-interface {v0, v1, v2}, Lcom/android/ozoaudio/notify/IOzoNotify;->setOzoConfiguration(ILjava/lang/String;)Z
++
++    move-result v0
++
++    iput-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    .line 993
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    return v0
++.end method
++
++.method public release()Z
++    .registers 4
++
++    .line 999
++    :try_start_0
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mService:Lcom/android/ozoaudio/notify/IOzoNotify;
++
++    iget v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    invoke-interface {v0, v1}, Lcom/android/ozoaudio/notify/IOzoNotify;->reset(I)V
++    :try_end_7
++    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_7} :catch_a
++
++    .line 1003
++    nop
++
++    .line 1005
++    const/4 v0, 0x1
++
++    return v0
++
++    .line 1000
++    :catch_a
++    move-exception v0
++
++    .line 1001
++    .local v0, "e":Ljava/lang/Exception;
++    const-string v1, "OzoAudio"
++
++    const-string v2, "release() failed: "
++
++    invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 1002
++    const/4 v1, 0x0
++
++    return v1
++.end method
++
++.method public requestProcessingData(J)Z
++    .registers 11
++    .param p1, "flags"    # J
++
++    .line 509
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x0
++
++    const-string v2, "OzoAudio"
++
++    const/4 v3, 0x1
++
++    if-ne v0, v3, :cond_e
++
++    .line 510
++    const-string v0, "Ozo processing already initialized, invalid call"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 511
++    return v1
++
++    .line 514
++    :cond_e
++    const-wide/16 v4, 0x1
++
++    and-long/2addr v4, p1
++
++    const-wide/16 v6, 0x0
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_26
++
++    .line 515
++    const-string/jumbo v0, "wnr"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_26
++
++    .line 516
++    const-string v0, "Unable to enable data request for WIND"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 517
++    return v1
++
++    .line 521
++    :cond_26
++    const-wide/16 v4, 0x2
++
++    and-long/2addr v4, p1
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_3b
++
++    .line 522
++    const-string v0, "audiolevels"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_3b
++
++    .line 523
++    const-string v0, "Unable to enable data request for LEVELS"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 524
++    return v1
++
++    .line 528
++    :cond_3b
++    const-wide/16 v4, 0x4
++
++    and-long/2addr v4, p1
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_50
++
++    .line 529
++    const-string v0, "micblocking"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_50
++
++    .line 530
++    const-string v0, "Unable to enable data request for MICBLOCKING"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 531
++    return v1
++
++    .line 535
++    :cond_50
++    const-wide/16 v4, 0x8
++
++    and-long/2addr v4, p1
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_65
++
++    .line 536
++    const-string v0, "audioframing"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_65
++
++    .line 537
++    const-string v0, "Unable to enable data request for FRAMING"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 538
++    return v1
++
++    .line 542
++    :cond_65
++    const-wide/16 v4, 0x10
++
++    and-long/2addr v4, p1
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_7b
++
++    .line 543
++    const-string/jumbo v0, "zoom"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_7b
++
++    .line 544
++    const-string v0, "Unable to enable data request for ZOOM"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 545
++    return v1
++
++    .line 549
++    :cond_7b
++    const-wide/16 v4, 0x20
++
++    and-long/2addr v4, p1
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_a2
++
++    .line 550
++    iget-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mAST:Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++
++    if-eqz v0, :cond_8c
++
++    .line 551
++    const-string v0, "Audio source tracking already enabled"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 552
++    return v1
++
++    .line 555
++    :cond_8c
++    new-instance v0, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioSourceTrackingImpl;
++
++    const/4 v4, 0x0
++
++    invoke-direct {v0, p0, v4}, Lcom/android/ozoaudio/lib/OzoAudioImpl$AudioSourceTrackingImpl;-><init>(Lcom/android/ozoaudio/lib/OzoAudioImpl;Lcom/android/ozoaudio/lib/OzoAudioImpl-IA;)V
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mAST:Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++
++    .line 556
++    const-string v0, "ast"
++
++    invoke-direct {p0, v0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_a2
++
++    .line 557
++    const-string v0, "Unable to enable data request for SOURCETRACKING"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 558
++    return v1
++
++    .line 562
++    :cond_a2
++    return v3
++.end method
++
++.method public setEffect()V
++    .registers 2
++
++    .line 692
++    const/4 v0, 0x1
++
++    iput-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mOzoEffect:Z
++
++    .line 693
++    return-void
++.end method
++
++.method public setEffectChannelMask(J)V
++    .registers 5
++    .param p1, "channelMask"    # J
++
++    .line 862
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, "channelmask="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1, p2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 863
++    return-void
++.end method
++
++.method public setInitParameters(Ljava/lang/String;I)V
++    .registers 5
++    .param p1, "deviceId"    # Ljava/lang/String;
++    .param p2, "mics"    # I
++
++    .line 845
++    const/4 v0, 0x1
++
++    iput-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mUUIDAvailable:Z
++
++    .line 846
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, "mode=ozoaudio;device="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";input-channels="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 847
++    return-void
++.end method
++
++.method public setMonoOutput()Z
++    .registers 3
++
++    .line 851
++    iget-boolean v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mUUIDAvailable:Z
++
++    if-nez v0, :cond_d
++
++    .line 852
++    const-string v0, "OzoAudio"
++
++    const-string v1, "setMonoOutput(): Device UUID missing: "
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 853
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 856
++    :cond_d
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, "mode=ls;"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 857
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method public setSessionId(I)Z
++    .registers 6
++    .param p1, "sessionId"    # I
++
++    .line 708
++    invoke-virtual {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->release()Z
++
++    move-result v0
++
++    .line 710
++    .local v0, "ret":Z
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_16
++
++    .line 713
++    :try_start_7
++    iput p1, p0, Lcom/android/ozoaudio/lib/OzoAudioImpl;->mSessionId:I
++
++    .line 714
++    invoke-direct {p0}, Lcom/android/ozoaudio/lib/OzoAudioImpl;->prepareCallback()V
++    :try_end_c
++    .catch Ljava/lang/Exception; {:try_start_7 .. :try_end_c} :catch_d
++
++    .line 718
++    goto :goto_16
++
++    .line 715
++    :catch_d
++    move-exception v1
++
++    .line 716
++    .local v1, "e":Ljava/lang/Exception;
++    const/4 v0, 0x0
++
++    .line 717
++    const-string v2, "OzoAudio"
++
++    const-string v3, "setSessionId() failed: "
++
++    invoke-static {v2, v3, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 721
++    .end local v1    # "e":Ljava/lang/Exception;
++    :cond_16
++    :goto_16
++    return v0
++.end method
+

@@ -1,0 +1,356 @@
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$Permissions.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$Permissions.smali
+new file mode 100644
+index 0000000..74196f2
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$Permissions.smali
+@@ -0,0 +1,94 @@
++.class public Lcom/android/ozoaudio/lib/OzoAudio$Permissions;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x9
++    name = "Permissions"
++.end annotation
++
++
++# instance fields
++.field public final aiIntelligentNoise:Z
++
++.field public final ambientNoise:Z
++
++.field public final audioSourceTracking:Z
++
++.field public final customProcessing:Z
++
++.field public final framing:Z
++
++.field public final intelligentNoise:Z
++
++.field public final levelIndication:Z
++
++.field public final micblocking:Z
++
++.field public final tune:Z
++
++.field public final windscreen:Z
++
++.field public final zoom:Z
++
++
++# direct methods
++.method constructor <init>(ZZZZZZZZZZZ)V
++    .registers 12
++    .param p1, "zoom"    # Z
++    .param p2, "windscreen"    # Z
++    .param p3, "framing"    # Z
++    .param p4, "micblocking"    # Z
++    .param p5, "ambientNoise"    # Z
++    .param p6, "intelligentNoise"    # Z
++    .param p7, "aiIntelligentNoise"    # Z
++    .param p8, "customProcessing"    # Z
++    .param p9, "audioSourceTracking"    # Z
++    .param p10, "levelIndication"    # Z
++    .param p11, "tune"    # Z
++
++    .line 795
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 796
++    iput-boolean p1, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->zoom:Z
++
++    .line 797
++    iput-boolean p2, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->windscreen:Z
++
++    .line 798
++    iput-boolean p3, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->framing:Z
++
++    .line 799
++    iput-boolean p4, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->micblocking:Z
++
++    .line 800
++    iput-boolean p5, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->ambientNoise:Z
++
++    .line 801
++    iput-boolean p6, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->intelligentNoise:Z
++
++    .line 802
++    iput-boolean p7, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->aiIntelligentNoise:Z
++
++    .line 803
++    iput-boolean p8, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->customProcessing:Z
++
++    .line 804
++    iput-boolean p9, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->audioSourceTracking:Z
++
++    .line 805
++    iput-boolean p10, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->levelIndication:Z
++
++    .line 806
++    iput-boolean p11, p0, Lcom/android/ozoaudio/lib/OzoAudio$Permissions;->tune:Z
++
++    .line 807
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$RequestDataParams.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$RequestDataParams.smali
+new file mode 100644
+index 0000000..61cb57b
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$RequestDataParams.smali
+@@ -0,0 +1,39 @@
++.class public final Lcom/android/ozoaudio/lib/OzoAudio$RequestDataParams;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x19
++    name = "RequestDataParams"
++.end annotation
++
++
++# static fields
++.field public static final FRAMING:J = 0x8L
++
++.field public static final LEVELS:J = 0x2L
++
++.field public static final MICBLOCKING:J = 0x4L
++
++.field public static final SOURCETRACKING:J = 0x20L
++
++.field public static final WIND:J = 0x1L
++
++.field public static final ZOOM:J = 0x10L
++
++
++# direct methods
++.method private constructor <init>()V
++    .registers 1
++
++    .line 673
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TrackerSource.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TrackerSource.smali
+new file mode 100644
+index 0000000..e697f63
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TrackerSource.smali
+@@ -0,0 +1,94 @@
++.class public Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x9
++    name = "TrackerSource"
++.end annotation
++
++
++# instance fields
++.field public final audioStrength:I
++
++.field public final azimuth:D
++
++.field public final dirConfidence:I
++
++.field public final elevation:D
++
++.field public final objectCategories:Ljava/util/ArrayList;
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "Ljava/util/ArrayList<",
++            "Ljava/util/ArrayList<",
++            "Ljava/lang/Integer;",
++            ">;>;"
++        }
++    .end annotation
++.end field
++
++.field public final trackerId:I
++
++.field public final trackingStatus:I
++
++.field public final visualId:I
++
++
++# direct methods
++.method public constructor <init>(IIDDIIILjava/util/ArrayList;)V
++    .registers 11
++    .param p1, "trackerId"    # I
++    .param p2, "visualId"    # I
++    .param p3, "azimuth"    # D
++    .param p5, "elevation"    # D
++    .param p7, "dirConfidence"    # I
++    .param p8, "audioStrength"    # I
++    .param p9, "trackingStatus"    # I
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "(IIDDIII",
++            "Ljava/util/ArrayList<",
++            "Ljava/util/ArrayList<",
++            "Ljava/lang/Integer;",
++            ">;>;)V"
++        }
++    .end annotation
++
++    .line 227
++    .local p10, "objectCategories":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Integer;>;>;"
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 228
++    iput p1, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->trackerId:I
++
++    .line 229
++    iput p2, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->visualId:I
++
++    .line 230
++    iput-wide p3, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->azimuth:D
++
++    .line 231
++    iput-wide p5, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->elevation:D
++
++    .line 232
++    iput p7, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->dirConfidence:I
++
++    .line 233
++    iput p8, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->audioStrength:I
++
++    .line 234
++    iput p9, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->trackingStatus:I
++
++    .line 235
++    iput-object p10, p0, Lcom/android/ozoaudio/lib/OzoAudio$TrackerSource;->objectCategories:Ljava/util/ArrayList;
++
++    .line 236
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TuneListener.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TuneListener.smali
+new file mode 100644
+index 0000000..0753cf4
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$TuneListener.smali
+@@ -0,0 +1,46 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "TuneListener"
++.end annotation
++
++
++# virtual methods
++.method public onTuneAudioData([B)V
++    .registers 4
++    .param p1, "data"    # [B
++
++    .line 372
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for TuneListener.onTuneData"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 373
++    return-void
++.end method
++
++.method public onTuneCtrlData([B)V
++    .registers 4
++    .param p1, "data"    # [B
++
++    .line 376
++    const-string v0, "OzoAudio"
++
++    const-string v1, "Using default implementation for TuneListener.onTuneCtrl"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 377
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$VisualData.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$VisualData.smali
+new file mode 100644
+index 0000000..89c6808
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$VisualData.smali
+@@ -0,0 +1,52 @@
++.class public Lcom/android/ozoaudio/lib/OzoAudio$VisualData;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x9
++    name = "VisualData"
++.end annotation
++
++
++# instance fields
++.field public final azimuth:D
++
++.field public final confidence:D
++
++.field public final elevation:D
++
++.field public final id:I
++
++
++# direct methods
++.method public constructor <init>(IDDD)V
++    .registers 8
++    .param p1, "id"    # I
++    .param p2, "azimuth"    # D
++    .param p4, "elevation"    # D
++    .param p6, "confidence"    # D
++
++    .line 295
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 296
++    iput p1, p0, Lcom/android/ozoaudio/lib/OzoAudio$VisualData;->id:I
++
++    .line 297
++    iput-wide p2, p0, Lcom/android/ozoaudio/lib/OzoAudio$VisualData;->azimuth:D
++
++    .line 298
++    iput-wide p4, p0, Lcom/android/ozoaudio/lib/OzoAudio$VisualData;->elevation:D
++
++    .line 299
++    iput-wide p6, p0, Lcom/android/ozoaudio/lib/OzoAudio$VisualData;->confidence:D
++
++    .line 300
++    return-void
++.end method
+

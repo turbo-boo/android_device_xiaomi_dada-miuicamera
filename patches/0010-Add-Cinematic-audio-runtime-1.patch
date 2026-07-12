@@ -1,0 +1,2571 @@
+diff --git a/smali_classes8/android/media/AudioParaManger$EventListener.smali b/smali_classes8/android/media/AudioParaManger$EventListener.smali
+new file mode 100644
+index 0000000..3faa78d
+--- /dev/null
++++ b/smali_classes8/android/media/AudioParaManger$EventListener.smali
+@@ -0,0 +1,28 @@
++.class public interface abstract Landroid/media/AudioParaManger$EventListener;
++.super Ljava/lang/Object;
++.source "AudioParaManger.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Landroid/media/AudioParaManger;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "EventListener"
++.end annotation
++
++
++# virtual methods
++.method public onAudioLevel(II)V
++    .registers 3
++    .param p1, "left"    # I
++    .param p2, "right"    # I
++
++    .line 322
++    return-void
++.end method
++
++.method public abstract onMicBlocking(II)V
++.end method
+diff --git a/smali_classes8/android/media/AudioParaManger$TuneListener.smali b/smali_classes8/android/media/AudioParaManger$TuneListener.smali
+new file mode 100644
+index 0000000..7123cf4
+--- /dev/null
++++ b/smali_classes8/android/media/AudioParaManger$TuneListener.smali
+@@ -0,0 +1,25 @@
++.class public interface abstract Landroid/media/AudioParaManger$TuneListener;
++.super Ljava/lang/Object;
++.source "AudioParaManger.java"
++
++# interfaces
++.implements Lcom/android/ozoaudio/lib/OzoAudio$TuneListener;
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Landroid/media/AudioParaManger;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "TuneListener"
++.end annotation
++
++
++# virtual methods
++.method public abstract onTuneAudioData([B)V
++.end method
++
++.method public abstract onTuneCtrlData([B)V
++.end method
+diff --git a/smali_classes8/android/media/AudioParaManger.smali b/smali_classes8/android/media/AudioParaManger.smali
+new file mode 100644
+index 0000000..16fb5c3
+--- /dev/null
++++ b/smali_classes8/android/media/AudioParaManger.smali
+@@ -0,0 +1,1656 @@
++.class public Landroid/media/AudioParaManger;
++.super Ljava/lang/Object;
++.source "AudioParaManger.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/MemberClasses;
++    value = {
++        Landroid/media/AudioParaManger$EventListener;,
++        Landroid/media/AudioParaManger$TuneListener;
++    }
++.end annotation
++
++
++# static fields
++.field private static final CAMERA_PKG:Ljava/lang/String; = "com.android.camera"
++
++.field public static final NONE:I = 0x0
++
++.field private static final TAG:Ljava/lang/String; = "AudioParaManger"
++
++
++# instance fields
++.field effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++.field private isSupportedThirdApp:Z
++
++.field private isSystemCamera:Z
++
++.field private mMQSUtils:Landroid/media/MQSUtils;
++
++
++# direct methods
++.method public constructor <init>(Landroid/media/AudioRecord;Landroid/content/Context;)V
++    .registers 5
++    .param p1, "recorder"    # Landroid/media/AudioRecord;
++    .param p2, "context"    # Landroid/content/Context;
++
++    .line 59
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 41
++    const/4 v0, 0x0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSystemCamera:Z
++
++    .line 42
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSupportedThirdApp:Z
++
++    .line 60
++    const-string v0, "AudioParaManger"
++
++    const-string v1, " create AudioParaManger for AudioRecord."
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 61
++    new-instance v0, Landroid/media/audiozoomfx/EffectUtils;
++
++    invoke-direct {v0}, Landroid/media/audiozoomfx/EffectUtils;-><init>()V
++
++    iput-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    .line 62
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    new-instance v1, Ljava/lang/ref/WeakReference;
++
++    invoke-direct {v1, p1}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
++
++    iput-object v1, v0, Landroid/media/audiozoomfx/EffectUtils;->mAudioRecorderRef:Ljava/lang/ref/WeakReference;
++
++    .line 63
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->getVendorAudioEffect()I
++
++    move-result v0
++
++    sput v0, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    .line 64
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->getUniteAudioEffect()I
++
++    move-result v0
++
++    sput v0, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    .line 65
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    const-string v1, "audio"
++
++    invoke-virtual {p2, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object v1
++
++    check-cast v1, Landroid/media/AudioManager;
++
++    iput-object v1, v0, Landroid/media/audiozoomfx/EffectUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    .line 66
++    const-string v0, "com.android.camera"
++
++    invoke-virtual {p2}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSystemCamera:Z
++
++    .line 67
++    invoke-static {p2}, Landroid/media/audiozoomfx/WhiteListAppUtil;->isSupportedApp(Landroid/content/Context;)Z
++
++    move-result v0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSupportedThirdApp:Z
++
++    .line 68
++    new-instance v0, Landroid/media/MQSUtils;
++
++    invoke-direct {v0, p2}, Landroid/media/MQSUtils;-><init>(Landroid/content/Context;)V
++
++    iput-object v0, p0, Landroid/media/AudioParaManger;->mMQSUtils:Landroid/media/MQSUtils;
++
++    .line 70
++    sget v0, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_58
++
++    .line 71
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->loadAudioSchemeConfig()V
++
++    .line 72
++    :cond_58
++    return-void
++.end method
++
++.method public constructor <init>(Landroid/media/MediaRecorder;Landroid/content/Context;)V
++    .registers 5
++    .param p1, "recorder"    # Landroid/media/MediaRecorder;
++    .param p2, "context"    # Landroid/content/Context;
++
++    .line 44
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 41
++    const/4 v0, 0x0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSystemCamera:Z
++
++    .line 42
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSupportedThirdApp:Z
++
++    .line 45
++    const-string v0, "AudioParaManger"
++
++    const-string v1, "create AudioParaManger for MediaRecorder."
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 46
++    new-instance v0, Landroid/media/audiozoomfx/EffectUtils;
++
++    invoke-direct {v0}, Landroid/media/audiozoomfx/EffectUtils;-><init>()V
++
++    iput-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    .line 47
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    new-instance v1, Ljava/lang/ref/WeakReference;
++
++    invoke-direct {v1, p1}, Ljava/lang/ref/WeakReference;-><init>(Ljava/lang/Object;)V
++
++    iput-object v1, v0, Landroid/media/audiozoomfx/EffectUtils;->mMediaRecorderRef:Ljava/lang/ref/WeakReference;
++
++    .line 48
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->getVendorAudioEffect()I
++
++    move-result v0
++
++    sput v0, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    .line 49
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->getUniteAudioEffect()I
++
++    move-result v0
++
++    sput v0, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    .line 50
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    const-string v1, "audio"
++
++    invoke-virtual {p2, v1}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object v1
++
++    check-cast v1, Landroid/media/AudioManager;
++
++    iput-object v1, v0, Landroid/media/audiozoomfx/EffectUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    .line 51
++    const-string v0, "com.android.camera"
++
++    invoke-virtual {p2}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSystemCamera:Z
++
++    .line 52
++    invoke-static {p2}, Landroid/media/audiozoomfx/WhiteListAppUtil;->isSupportedApp(Landroid/content/Context;)Z
++
++    move-result v0
++
++    iput-boolean v0, p0, Landroid/media/AudioParaManger;->isSupportedThirdApp:Z
++
++    .line 53
++    new-instance v0, Landroid/media/MQSUtils;
++
++    invoke-direct {v0, p2}, Landroid/media/MQSUtils;-><init>(Landroid/content/Context;)V
++
++    iput-object v0, p0, Landroid/media/AudioParaManger;->mMQSUtils:Landroid/media/MQSUtils;
++
++    .line 55
++    sget v0, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_58
++
++    .line 56
++    invoke-static {}, Landroid/media/audiozoomfx/EffectUtils;->loadAudioSchemeConfig()V
++
++    .line 57
++    :cond_58
++    return-void
++.end method
++
++.method public static isAudioZoomSupported(Landroid/content/Context;)Z
++    .registers 2
++    .param p0, "context"    # Landroid/content/Context;
++
++    .line 87
++    invoke-static {p0}, Landroid/media/audiozoomfx/WhiteListAppUtil;->isSupportedApp(Landroid/content/Context;)Z
++
++    move-result v0
++
++    return v0
++.end method
++
++
++# virtual methods
++.method public creatOzoEffect(I)Z
++    .registers 4
++    .param p1, "sessionId"    # I
++
++    .line 174
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_11
++
++    .line 175
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioEffects(I)Z
++
++    move-result v0
++
++    return v0
++
++    .line 177
++    :cond_11
++    const/4 v0, 0x0
++
++    return v0
++.end method
++
++.method public createAudioEffects(I)Z
++    .registers 3
++    .param p1, "sessionId"    # I
++
++    .line 151
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioEffects(I)Z
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public createAudioObject(Landroid/media/AudioParaManger$EventListener;)V
++    .registers 5
++    .param p1, "eventListener"    # Landroid/media/AudioParaManger$EventListener;
++
++    .line 125
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v2, 0x2
++
++    if-ne v0, v2, :cond_10
++
++    .line 126
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject(Landroid/media/AudioParaManger$EventListener;)Z
++
++    goto :goto_3b
++
++    .line 127
++    :cond_10
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    const/4 v2, 0x3
++
++    if-ne v0, v2, :cond_1f
++
++    .line 128
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject()Z
++
++    goto :goto_3b
++
++    .line 129
++    :cond_1f
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    if-ne v0, v1, :cond_2d
++
++    .line 130
++    const-string v0, "AudioParaManger"
++
++    const-string v1, "FORTE debug no need this"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_3b
++
++    .line 131
++    :cond_2d
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x4
++
++    if-ne v0, v1, :cond_3b
++
++    .line 132
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject()Z
++
++    .line 134
++    :cond_3b
++    :goto_3b
++    return-void
++.end method
++
++.method public createAudioObject(Landroid/media/AudioParaManger$EventListener;Landroid/media/AudioParaManger$TuneListener;)V
++    .registers 6
++    .param p1, "eventListener"    # Landroid/media/AudioParaManger$EventListener;
++    .param p2, "tunelistener"    # Landroid/media/AudioParaManger$TuneListener;
++
++    .line 138
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v2, 0x2
++
++    if-ne v0, v2, :cond_10
++
++    .line 139
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1, p2}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject(Landroid/media/AudioParaManger$EventListener;Landroid/media/AudioParaManger$TuneListener;)Z
++
++    goto :goto_3b
++
++    .line 140
++    :cond_10
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    const/4 v2, 0x3
++
++    if-ne v0, v2, :cond_1f
++
++    .line 141
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject()Z
++
++    goto :goto_3b
++
++    .line 142
++    :cond_1f
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    if-ne v0, v1, :cond_2d
++
++    .line 143
++    const-string v0, "AudioParaManger"
++
++    const-string v1, "FORTE debug no need this"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_3b
++
++    .line 144
++    :cond_2d
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x4
++
++    if-ne v0, v1, :cond_3b
++
++    .line 145
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject()Z
++
++    .line 147
++    :cond_3b
++    :goto_3b
++    return-void
++.end method
++
++.method public createOzo(Landroid/media/AudioParaManger$EventListener;)V
++    .registers 4
++    .param p1, "eventListener"    # Landroid/media/AudioParaManger$EventListener;
++
++    .line 161
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_f
++
++    .line 162
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject(Landroid/media/AudioParaManger$EventListener;)Z
++
++    .line 164
++    :cond_f
++    return-void
++.end method
++
++.method public createOzo(Landroid/media/AudioParaManger$EventListener;Landroid/media/AudioParaManger$TuneListener;)V
++    .registers 5
++    .param p1, "eventListener"    # Landroid/media/AudioParaManger$EventListener;
++    .param p2, "tunelistener"    # Landroid/media/AudioParaManger$TuneListener;
++
++    .line 167
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_f
++
++    .line 168
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1, p2}, Landroid/media/audiozoomfx/AudioVendorManager;->createAudioObject(Landroid/media/AudioParaManger$EventListener;Landroid/media/AudioParaManger$TuneListener;)Z
++
++    .line 170
++    :cond_f
++    return-void
++.end method
++
++.method public getAudioConfig()[I
++    .registers 4
++
++    .line 198
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "getAudioConfig CurrentAudioConfig fun: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x0
++
++    aget v1, v1, v2
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " provider: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x1
++
++    aget v1, v1, v2
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " chmask: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x2
++
++    aget v1, v1, v2
++
++    invoke-static {v1}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " chindexmask: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x3
++
++    aget v1, v1, v2
++
++    invoke-static {v1}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " mode: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x4
++
++    aget v1, v1, v2
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, " bit: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v2, 0x5
++
++    aget v1, v1, v2
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "AudioParaManger"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 199
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    return-object v0
++.end method
++
++.method public init(IIIDDDDDZ)Z
++    .registers 37
++    .param p1, "recType"    # I
++    .param p2, "shot"    # I
++    .param p3, "sence"    # I
++    .param p4, "level"    # D
++    .param p6, "azi"    # D
++    .param p8, "ele"    # D
++    .param p10, "width"    # D
++    .param p12, "height"    # D
++    .param p14, "wnd_ns"    # Z
++
++    .line 97
++    move-object/from16 v0, p0
++
++    move/from16 v2, p1
++
++    move/from16 v15, p14
++
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "init:  recType/@"
++
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v3, " shot/@"
++
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move/from16 v3, p2
++
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v4, " sence/@"
++
++    invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move/from16 v4, p3
++
++    invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v5, " wnd_ns/@"
++
++    invoke-virtual {v1, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v15}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v5, "AudioParaManger"
++
++    invoke-static {v5, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 98
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v6, "init:  level/@"
++
++    invoke-virtual {v1, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move-wide/from16 v6, p4
++
++    invoke-virtual {v1, v6, v7}, Ljava/lang/StringBuilder;->append(D)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v8, " azi/@"
++
++    invoke-virtual {v1, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move-wide/from16 v8, p6
++
++    invoke-virtual {v1, v8, v9}, Ljava/lang/StringBuilder;->append(D)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v10, " ele/@"
++
++    invoke-virtual {v1, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move-wide/from16 v10, p8
++
++    invoke-virtual {v1, v10, v11}, Ljava/lang/StringBuilder;->append(D)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v12, " width/@"
++
++    invoke-virtual {v1, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move-wide/from16 v12, p10
++
++    invoke-virtual {v1, v12, v13}, Ljava/lang/StringBuilder;->append(D)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    const-string v14, " height/@"
++
++    invoke-virtual {v1, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    move-wide/from16 v3, p12
++
++    invoke-virtual {v1, v3, v4}, Ljava/lang/StringBuilder;->append(D)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-static {v5, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 99
++    iget-boolean v1, v0, Landroid/media/AudioParaManger;->isSystemCamera:Z
++
++    const/4 v5, 0x0
++
++    if-nez v1, :cond_92
++
++    iget-boolean v1, v0, Landroid/media/AudioParaManger;->isSupportedThirdApp:Z
++
++    if-nez v1, :cond_92
++
++    .line 100
++    return v5
++
++    .line 102
++    :cond_92
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    sget v14, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    invoke-virtual {v1, v14}, Landroid/media/audiozoomfx/EffectUtils;->isAudioZoomSupport(I)Z
++
++    move-result v1
++
++    if-nez v1, :cond_9d
++
++    .line 103
++    return v5
++
++    .line 105
++    :cond_9d
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iput v2, v1, Landroid/media/audiozoomfx/EffectUtils;->mRecType:I
++
++    .line 106
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iput v15, v1, Landroid/media/audiozoomfx/EffectUtils;->mWndNoise:I
++
++    .line 107
++    sget v1, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    const/4 v14, 0x1
++
++    if-ne v1, v14, :cond_bc
++
++    .line 108
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v5, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget v5, v5, Landroid/media/audiozoomfx/EffectUtils;->mRecType:I
++
++    move/from16 v16, v14
++
++    iget-object v14, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget v14, v14, Landroid/media/audiozoomfx/EffectUtils;->mWndNoise:I
++
++    sget-object v2, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    invoke-virtual {v1, v5, v14, v2}, Landroid/media/audiozoomfx/EffectUtils;->getCurrentFunConfig(II[I)Z
++
++    goto :goto_cb
++
++    .line 109
++    :cond_bc
++    move/from16 v16, v14
++
++    sget v1, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    const/4 v2, 0x2
++
++    if-ne v1, v2, :cond_cb
++
++    .line 111
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aput p1, v1, v5
++
++    .line 112
++    sget-object v1, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aput v2, v1, v16
++
++    .line 115
++    :cond_cb
++    :goto_cb
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    sget-object v2, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    aget v2, v2, v16
++
++    invoke-static {v2}, Landroid/media/audiozoomfx/AudioVendorManagerFactory;->getVendorManager(I)Landroid/media/audiozoomfx/AudioVendorManager;
++
++    move-result-object v2
++
++    iput-object v2, v1, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    .line 116
++    iget-object v1, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v1, v1, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    iget-object v2, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget v2, v2, Landroid/media/audiozoomfx/EffectUtils;->mMaxVisual:I
++
++    sget-object v17, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    sget v18, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    sget v19, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    iget-object v5, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v5, v5, Landroid/media/audiozoomfx/EffectUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    iget-object v14, v0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v14, v14, Landroid/media/audiozoomfx/EffectUtils;->mMediaRecorderRef:Ljava/lang/ref/WeakReference;
++
++    move/from16 v16, v2
++
++    move-object/from16 v20, v5
++
++    move-wide v5, v6
++
++    move-wide v7, v8
++
++    move-wide v9, v10
++
++    move-wide v11, v12
++
++    move-object/from16 v21, v14
++
++    move/from16 v2, p1
++
++    move-wide v13, v3
++
++    move/from16 v3, p2
++
++    move/from16 v4, p3
++
++    invoke-interface/range {v1 .. v21}, Landroid/media/audiozoomfx/AudioVendorManager;->initAudioVendor(IIIDDDDDZI[IIILandroid/media/AudioManager;Ljava/lang/ref/WeakReference;)Z
++
++    move-result v1
++
++    .line 120
++    .local v1, "paramterstatus":Z
++    return v1
++.end method
++
++.method public isUnite()Z
++    .registers 3
++
++    .line 91
++    sget v0, Landroid/media/audiozoomfx/EffectUtils;->mIsUnite:I
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_6
++
++    goto :goto_7
++
++    :cond_6
++    const/4 v1, 0x0
++
++    :goto_7
++    return v1
++.end method
++
++.method public prepare()V
++    .registers 4
++
++    .line 190
++    :try_start_0
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->prepare()V
++    :try_end_7
++    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_7} :catch_8
++
++    .line 193
++    goto :goto_21
++
++    .line 191
++    :catch_8
++    move-exception v0
++
++    .line 192
++    .local v0, "e":Ljava/lang/Exception;
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "prepare error: "
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "AudioParaManger"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 194
++    .end local v0    # "e":Ljava/lang/Exception;
++    :goto_21
++    return-void
++.end method
++
++.method public releaseAudioEffect()V
++    .registers 2
++
++    .line 156
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->releaseAudioEffect()V
++
++    .line 157
++    return-void
++.end method
++
++.method public releaseOzoEffect()V
++    .registers 3
++
++    .line 182
++    sget-object v0, Landroid/media/audiozoomfx/EffectUtils;->CurrentAudioConfig:[I
++
++    const/4 v1, 0x1
++
++    aget v0, v0, v1
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_f
++
++    .line 183
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0}, Landroid/media/audiozoomfx/AudioVendorManager;->releaseAudioEffect()V
++
++    .line 185
++    :cond_f
++    return-void
++.end method
++
++.method public setAudioFocusAzimuth(D)V
++    .registers 3
++    .param p1, "azimuth"    # D
++
++    .line 276
++    return-void
++.end method
++
++.method public setAudioFocusAzimuth(DI)V
++    .registers 20
++    .param p1, "azimuth"    # D
++    .param p3, "zoomtype"    # I
++
++    .line 246
++    const/4 v14, 0x0
++
++    .line 247
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const/4 v11, 0x0
++
++    const/4 v12, 0x0
++
++    const-wide/16 v3, 0x0
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const/4 v9, 0x0
++
++    const/4 v10, 0x0
++
++    move-wide/from16 v1, p1
++
++    move/from16 v13, p3
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    .line 248
++    return-void
++.end method
++
++.method public setAudioFocusElevation(D)V
++    .registers 3
++    .param p1, "elevation"    # D
++
++    .line 280
++    return-void
++.end method
++
++.method public setAudioFocusElevation(DI)V
++    .registers 20
++    .param p1, "elevation"    # D
++    .param p3, "zoomtype"    # I
++
++    .line 254
++    const/4 v14, 0x1
++
++    .line 255
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const/4 v11, 0x0
++
++    const/4 v12, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const/4 v9, 0x0
++
++    const/4 v10, 0x0
++
++    move-wide/from16 v3, p1
++
++    move/from16 v13, p3
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    .line 256
++    return-void
++.end method
++
++.method public setAudioFocusHeight(D)V
++    .registers 19
++    .param p1, "hight"    # D
++
++    .line 270
++    const/4 v13, -0x1
++
++    .local v13, "zoomtype":I
++    const/4 v14, 0x3
++
++    .line 271
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const/4 v11, 0x0
++
++    const/4 v12, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    const-wide/16 v5, 0x0
++
++    const/4 v9, 0x0
++
++    const/4 v10, 0x0
++
++    move-wide/from16 v7, p1
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    .line 272
++    return-void
++.end method
++
++.method public setAudioFocusWidth(D)V
++    .registers 19
++    .param p1, "width"    # D
++
++    .line 262
++    const/4 v13, -0x1
++
++    .local v13, "zoomtype":I
++    const/4 v14, 0x2
++
++    .line 263
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const/4 v11, 0x0
++
++    const/4 v12, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const/4 v9, 0x0
++
++    const/4 v10, 0x0
++
++    move-wide/from16 v5, p1
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    .line 264
++    return-void
++.end method
++
++.method public setAudioWindNoise(Z)V
++    .registers 3
++    .param p1, "wnd_ns"    # Z
++
++    .line 219
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioWindNoise(Z)V
++
++    .line 220
++    return-void
++.end method
++
++.method public setAudioZoom(IZ)V
++    .registers 4
++    .param p1, "beamindex"    # I
++    .param p2, "audio_zoom"    # Z
++
++    .line 234
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1, p2}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioZoom(IZ)V
++
++    .line 235
++    return-void
++.end method
++
++.method public setAudioZoomLevel(D)V
++    .registers 4
++    .param p1, "level"    # D
++
++    .line 239
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1, p2}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioZoomLevel(D)V
++
++    .line 240
++    return-void
++.end method
++
++.method public setFocusRegion(IIII)I
++    .registers 21
++    .param p1, "left_up_x"    # I
++    .param p2, "left_up_y"    # I
++    .param p3, "right_bottom_x"    # I
++    .param p4, "right_bottom_y"    # I
++
++    .line 286
++    const/4 v13, -0x1
++
++    .local v13, "zoomtype":I
++    const/4 v14, 0x0
++
++    .line 287
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    move/from16 v9, p1
++
++    move/from16 v10, p2
++
++    move/from16 v11, p3
++
++    move/from16 v12, p4
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public setFocusRegion(IIIII)I
++    .registers 22
++    .param p1, "left_up_x"    # I
++    .param p2, "left_up_y"    # I
++    .param p3, "right_bottom_x"    # I
++    .param p4, "right_bottom_y"    # I
++    .param p5, "zoomtype"    # I
++
++    .line 302
++    const/4 v14, 0x0
++
++    .line 303
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    move/from16 v9, p1
++
++    move/from16 v10, p2
++
++    move/from16 v11, p3
++
++    move/from16 v12, p4
++
++    move/from16 v13, p5
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public setMaxSupportLevel(I)V
++    .registers 4
++    .param p1, "mLevel"    # I
++
++    .line 77
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "setMaxSupportLevel: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "AudioParaManger"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 78
++    sget v0, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    const/4 v1, 0x1
++
++    if-eq v0, v1, :cond_22
++
++    sget v0, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_2e
++
++    .line 79
++    :cond_22
++    const/4 v0, 0x6
++
++    if-ge p1, v0, :cond_2a
++
++    .line 80
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iput p1, v0, Landroid/media/audiozoomfx/EffectUtils;->mMaxVisual:I
++
++    goto :goto_2e
++
++    .line 82
++    :cond_2a
++    iget-object v1, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iput v0, v1, Landroid/media/audiozoomfx/EffectUtils;->mMaxVisual:I
++
++    .line 84
++    :cond_2e
++    :goto_2e
++    return-void
++.end method
++
++.method public setRecordType(I)V
++    .registers 3
++    .param p1, "recType"    # I
++
++    .line 214
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->setRecordType(I)V
++
++    .line 215
++    return-void
++.end method
++
++.method public setSensorAngleRange(I)I
++    .registers 3
++    .param p1, "angle"    # I
++
++    .line 316
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->setSensorAngleRange(I)I
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public setUserGain(D)V
++    .registers 4
++    .param p1, "level"    # D
++
++    .line 229
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1, p2}, Landroid/media/audiozoomfx/AudioVendorManager;->setUserGain(D)V
++
++    .line 230
++    return-void
++.end method
++
++.method public setUserMode(Z)V
++    .registers 3
++    .param p1, "ugc"    # Z
++
++    .line 224
++    iget-object v0, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    invoke-interface {v0, p1}, Landroid/media/audiozoomfx/AudioVendorManager;->setUserMode(Z)V
++
++    .line 225
++    return-void
++.end method
++
++.method public setViewRegion(IIII)I
++    .registers 21
++    .param p1, "left_up_x"    # I
++    .param p2, "left_up_y"    # I
++    .param p3, "right_bottom_x"    # I
++    .param p4, "right_bottom_y"    # I
++
++    .line 294
++    const/4 v13, -0x1
++
++    .local v13, "zoomtype":I
++    const/4 v14, 0x1
++
++    .line 295
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    move/from16 v9, p1
++
++    move/from16 v10, p2
++
++    move/from16 v11, p3
++
++    move/from16 v12, p4
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public setViewRegion(IIIII)I
++    .registers 22
++    .param p1, "left_up_x"    # I
++    .param p2, "left_up_y"    # I
++    .param p3, "right_bottom_x"    # I
++    .param p4, "right_bottom_y"    # I
++    .param p5, "zoomtype"    # I
++
++    .line 310
++    const/4 v14, 0x1
++
++    .line 311
++    .local v14, "funcTag":I
++    move-object/from16 v15, p0
++
++    iget-object v0, v15, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget-object v0, v0, Landroid/media/audiozoomfx/EffectUtils;->mVendorManager:Landroid/media/audiozoomfx/AudioVendorManager;
++
++    const-wide/16 v5, 0x0
++
++    const-wide/16 v7, 0x0
++
++    const-wide/16 v1, 0x0
++
++    const-wide/16 v3, 0x0
++
++    move/from16 v9, p1
++
++    move/from16 v10, p2
++
++    move/from16 v11, p3
++
++    move/from16 v12, p4
++
++    move/from16 v13, p5
++
++    invoke-interface/range {v0 .. v14}, Landroid/media/audiozoomfx/AudioVendorManager;->setAudioFocus(DDDDIIIIII)I
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public start()V
++    .registers 6
++
++    .line 204
++    const-string/jumbo v0, "start"
++
++    const-string v1, "AudioParaManger"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 206
++    :try_start_8
++    iget-object v0, p0, Landroid/media/AudioParaManger;->mMQSUtils:Landroid/media/MQSUtils;
++
++    sget v2, Landroid/media/audiozoomfx/EffectUtils;->mVendor:I
++
++    iget-object v3, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget v3, v3, Landroid/media/audiozoomfx/EffectUtils;->mWndNoise:I
++
++    iget-object v4, p0, Landroid/media/AudioParaManger;->effectUtils:Landroid/media/audiozoomfx/EffectUtils;
++
++    iget v4, v4, Landroid/media/audiozoomfx/EffectUtils;->mRecType:I
++
++    invoke-virtual {v0, v2, v3, v4}, Landroid/media/MQSUtils;->reportCameraRecordDailyUse(III)V
++    :try_end_17
++    .catch Ljava/lang/Exception; {:try_start_8 .. :try_end_17} :catch_18
++
++    .line 209
++    goto :goto_30
++
++    .line 207
++    :catch_18
++    move-exception v0
++
++    .line 208
++    .local v0, "e":Ljava/lang/Exception;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v3, "start error: "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 210
++    .end local v0    # "e":Ljava/lang/Exception;
++    :goto_30
++    return-void
++.end method
+diff --git a/smali_classes8/android/media/MQSUtils.smali b/smali_classes8/android/media/MQSUtils.smali
+new file mode 100644
+index 0000000..7069cb5
+--- /dev/null
++++ b/smali_classes8/android/media/MQSUtils.smali
+@@ -0,0 +1,772 @@
++.class public Landroid/media/MQSUtils;
++.super Ljava/lang/Object;
++.source "MQSUtils.java"
++
++
++# static fields
++.field private static final AUDIO_CAMERA_GAIN:Ljava/lang/String; = "audio_camera_gain"
++
++.field private static final AUDIO_CAMERA_GAIN_SUPPORT:Ljava/lang/String; = "audio_camera_gain_support"
++
++.field private static final AUDIO_CAMERA_LOOPBACK_SUPPORT:Ljava/lang/String; = "audio_camera_loopback_support"
++
++.field private static final AUDIO_KARAOK_ENABLE:Ljava/lang/String; = "vendor.audio.karaoke.enable"
++
++.field private static final TAG:Ljava/lang/String; = "AudioParaManger.MQSUtils"
++
++
++# instance fields
++.field private mAudioManager:Landroid/media/AudioManager;
++
++.field private mMiuiXlog:Landroid/media/MiuiXlog;
++
++
++# direct methods
++.method public constructor <init>(Landroid/content/Context;)V
++    .registers 3
++    .param p1, "context"    # Landroid/content/Context;
++
++    .line 26
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 24
++    new-instance v0, Landroid/media/MiuiXlog;
++
++    invoke-direct {v0}, Landroid/media/MiuiXlog;-><init>()V
++
++    iput-object v0, p0, Landroid/media/MQSUtils;->mMiuiXlog:Landroid/media/MiuiXlog;
++
++    .line 27
++    const-string v0, "audio"
++
++    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object v0
++
++    check-cast v0, Landroid/media/AudioManager;
++
++    iput-object v0, p0, Landroid/media/MQSUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    .line 28
++    return-void
++.end method
++
++.method private getCameraGain()Ljava/lang/String;
++    .registers 4
++
++    .line 71
++    iget-object v0, p0, Landroid/media/MQSUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    const-string v1, "audio_camera_gain"
++
++    invoke-virtual {v0, v1}, Landroid/media/AudioManager;->getParameters(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 72
++    .local v0, "CameraGain":Ljava/lang/String;
++    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_32
++
++    .line 73
++    const-string v1, "="
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->indexOf(Ljava/lang/String;)I
++
++    move-result v1
++
++    add-int/lit8 v1, v1, 0x1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->substring(I)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 74
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "getCameraGain = "
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "AudioParaManger.MQSUtils"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 76
++    :cond_32
++    return-object v0
++.end method
++
++.method private isAudioKaraokeOpen()Ljava/lang/String;
++    .registers 4
++
++    .line 43
++    const-string v0, "false"
++
++    .line 44
++    .local v0, "isKaraokeOpen":Ljava/lang/String;
++    invoke-direct {p0}, Landroid/media/MQSUtils;->isAudioKaraokeSupport()Z
++
++    move-result v1
++
++    if-eqz v1, :cond_3d
++
++    .line 45
++    const-string/jumbo v1, "vendor.audio.karaoke.enable"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 46
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "isAudioKaraokeOpen :"
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "AudioParaManger.MQSUtils"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 47
++    const-string/jumbo v1, "true"
++
++    invoke-virtual {v1, v0}, Ljava/lang/Object;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_36
++
++    .line 48
++    const-string v1, "isAudioKaraokeOpen is open"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_38
++
++    .line 50
++    :cond_36
++    const-string v0, "false"
++
++    .line 52
++    :goto_38
++    const-string v1, "isAudioKaraokeOpen is false"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 54
++    :cond_3d
++    return-object v0
++.end method
++
++.method private isAudioKaraokeSupport()Z
++    .registers 5
++
++    .line 32
++    iget-object v0, p0, Landroid/media/MQSUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    const-string v1, "audio_camera_loopback_support"
++
++    invoke-virtual {v0, v1}, Landroid/media/AudioManager;->getParameters(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 33
++    .local v0, "isCameraLoopbackSupport":Ljava/lang/String;
++    const-string v1, "audio_camera_loopback_support=true"
++
++    invoke-virtual {v1, v0}, Ljava/lang/Object;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    const-string v2, "AudioParaManger.MQSUtils"
++
++    if-eqz v1, :cond_2a
++
++    .line 34
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "isCameraLoopbackSupport:"
++
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 35
++    const/4 v1, 0x1
++
++    return v1
++
++    .line 37
++    :cond_2a
++    const-string v1, "isAudioKaraokeSupport is not support"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 38
++    const/4 v1, 0x0
++
++    return v1
++.end method
++
++.method private isCameraGainSupport()Z
++    .registers 4
++
++    .line 59
++    iget-object v0, p0, Landroid/media/MQSUtils;->mAudioManager:Landroid/media/AudioManager;
++
++    const-string v1, "audio_camera_gain_support"
++
++    invoke-virtual {v0, v1}, Landroid/media/AudioManager;->getParameters(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 60
++    .local v0, "isGainSupport":Ljava/lang/String;
++    const-string v1, "audio_camera_gain_support=true"
++
++    invoke-virtual {v1, v0}, Ljava/lang/Object;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    const-string v2, "AudioParaManger.MQSUtils"
++
++    if-eqz v1, :cond_19
++
++    .line 61
++    const-string v1, "isCameraGainSupport is support"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 62
++    const/4 v1, 0x1
++
++    return v1
++
++    .line 64
++    :cond_19
++    const-string v1, "isCameraGainSupport is not support"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 65
++    const/4 v1, 0x0
++
++    return v1
++.end method
++
++
++# virtual methods
++.method public reportCameraRecordDailyUse(III)V
++    .registers 11
++    .param p1, "vendor"    # I
++    .param p2, "wnd_ns"    # I
++    .param p3, "recType"    # I
++
++    .line 80
++    const-string v0, "reportCameraRecordDailyUse start"
++
++    const-string v1, "AudioParaManger.MQSUtils"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 83
++    packed-switch p1, :pswitch_data_a8
++
++    .line 91
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v2, "the vendor is "
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 92
++    return-void
++
++    .line 88
++    :pswitch_22
++    const-string v0, "nokia"
++
++    .line 89
++    .local v0, "vendor_str":Ljava/lang/String;
++    goto :goto_28
++
++    .line 85
++    .end local v0    # "vendor_str":Ljava/lang/String;
++    :pswitch_25
++    const-string v0, "forte"
++
++    .line 86
++    .restart local v0    # "vendor_str":Ljava/lang/String;
++    nop
++
++    .line 96
++    :goto_28
++    packed-switch p2, :pswitch_data_b0
++
++    .line 104
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v3, "the wnd_ns is "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 105
++    return-void
++
++    .line 101
++    :pswitch_43
++    const-string v2, "open"
++
++    .line 102
++    .local v2, "wnd_ns_str":Ljava/lang/String;
++    goto :goto_49
++
++    .line 98
++    .end local v2    # "wnd_ns_str":Ljava/lang/String;
++    :pswitch_46
++    const-string v2, "close"
++
++    .line 99
++    .restart local v2    # "wnd_ns_str":Ljava/lang/String;
++    nop
++
++    .line 109
++    :goto_49
++    packed-switch p3, :pswitch_data_b8
++
++    .line 123
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v4, "the recType is "
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++
++    invoke-static {v1, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 124
++    return-void
++
++    .line 120
++    :pswitch_64
++    const-string v3, "3d_stereo"
++
++    .line 121
++    .local v3, "recType_str":Ljava/lang/String;
++    goto :goto_71
++
++    .line 117
++    .end local v3    # "recType_str":Ljava/lang/String;
++    :pswitch_67
++    const-string v3, "audio_zoom"
++
++    .line 118
++    .restart local v3    # "recType_str":Ljava/lang/String;
++    goto :goto_71
++
++    .line 114
++    .end local v3    # "recType_str":Ljava/lang/String;
++    :pswitch_6a
++    const-string/jumbo v3, "standard"
++
++    .line 115
++    .restart local v3    # "recType_str":Ljava/lang/String;
++    goto :goto_71
++
++    .line 111
++    .end local v3    # "recType_str":Ljava/lang/String;
++    :pswitch_6e
++    const-string v3, "front_fixed_focus"
++
++    .line 112
++    .restart local v3    # "recType_str":Ljava/lang/String;
++    nop
++
++    .line 128
++    :goto_71
++    invoke-direct {p0}, Landroid/media/MQSUtils;->isAudioKaraokeOpen()Ljava/lang/String;
++
++    move-result-object v4
++
++    invoke-direct {p0}, Landroid/media/MQSUtils;->getCameraGain()Ljava/lang/String;
++
++    move-result-object v5
++
++    filled-new-array {v0, v2, v3, v4, v5}, [Ljava/lang/Object;
++
++    move-result-object v4
++
++    const-string/jumbo v5, "{\"name\":\"camera_record\",\"audio_event\":{\"camera_record_vendor\":\"%s\",\"cam_intelligent_noise_reduction\":\"%s\",\"cam_record_3d_stereo\":\"%s\",\"cam_audio_karaoke\":\"%s\",\"camera_record_gain\":\"%s\"},\"dgt\":\"null\",\"audio_ext\":\"null\" }"
++
++    invoke-static {v5, v4}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
++
++    move-result-object v4
++
++    .line 130
++    .local v4, "result":Ljava/lang/String;
++    new-instance v5, Ljava/lang/StringBuilder;
++
++    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v6, "reportCameraRecordDailyUse:"
++
++    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v5
++
++    invoke-virtual {v5, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v5
++
++    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v5
++
++    invoke-static {v1, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 132
++    :try_start_9a
++    iget-object v5, p0, Landroid/media/MQSUtils;->mMiuiXlog:Landroid/media/MiuiXlog;
++
++    invoke-virtual {v5, v4}, Landroid/media/MiuiXlog;->miuiXlogSend(Ljava/lang/String;)I
++    :try_end_9f
++    .catchall {:try_start_9a .. :try_end_9f} :catchall_a0
++
++    .line 135
++    goto :goto_a6
++
++    .line 133
++    :catchall_a0
++    move-exception v5
++
++    .line 134
++    .local v5, "e":Ljava/lang/Throwable;
++    const-string v6, "can not use miuiXlogSend!!!"
++
++    invoke-static {v1, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 136
++    .end local v5    # "e":Ljava/lang/Throwable;
++    :goto_a6
++    return-void
++
++    nop
++
++    :pswitch_data_a8
++    .packed-switch 0x1
++        :pswitch_25
++        :pswitch_22
++    .end packed-switch
++
++    :pswitch_data_b0
++    .packed-switch 0x0
++        :pswitch_46
++        :pswitch_43
++    .end packed-switch
++
++    :pswitch_data_b8
++    .packed-switch 0x0
++        :pswitch_6e
++        :pswitch_6a
++        :pswitch_67
++        :pswitch_64
++    .end packed-switch
++.end method
++
++.method public reportRecorderDailyUse(IIIZ)V
++    .registers 13
++    .param p1, "sampleRateInHz"    # I
++    .param p2, "channelConfig"    # I
++    .param p3, "audioFormat"    # I
++    .param p4, "status"    # Z
++
++    .line 139
++    const-string v0, "reportCameraRecordDailyUse start"
++
++    const-string v1, "AudioParaManger.MQSUtils"
++
++    invoke-static {v1, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 140
++    invoke-static {p1}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 141
++    .local v0, "sampleRateStr":Ljava/lang/String;
++    invoke-static {p4}, Ljava/lang/String;->valueOf(Z)Ljava/lang/String;
++
++    move-result-object v2
++
++    .line 144
++    .local v2, "statusStr":Ljava/lang/String;
++    sparse-switch p2, :sswitch_data_8a
++
++    .line 152
++    const-string v3, "CHANNEL_OTHER"
++
++    .line 153
++    .local v3, "channelConfigStr":Ljava/lang/String;
++    new-instance v4, Ljava/lang/StringBuilder;
++
++    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v5, "the channelConfig is "
++
++    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v4
++
++    invoke-virtual {v4, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v4
++
++    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v4
++
++    invoke-static {v1, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_32
++
++    .line 146
++    .end local v3    # "channelConfigStr":Ljava/lang/String;
++    :sswitch_2c
++    const-string v3, "CHANNEL_OUT_STEREO"
++
++    .line 147
++    .restart local v3    # "channelConfigStr":Ljava/lang/String;
++    goto :goto_32
++
++    .line 149
++    .end local v3    # "channelConfigStr":Ljava/lang/String;
++    :sswitch_2f
++    const-string v3, "CHANNEL_OUT_MONO"
++
++    .line 150
++    .restart local v3    # "channelConfigStr":Ljava/lang/String;
++    nop
++
++    .line 158
++    :goto_32
++    sparse-switch p3, :sswitch_data_94
++
++    .line 172
++    const-string v4, "ENCODING_OTHER"
++
++    .line 173
++    .local v4, "audioFormatStr":Ljava/lang/String;
++    new-instance v5, Ljava/lang/StringBuilder;
++
++    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v6, "the audioFormat is "
++
++    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v5
++
++    invoke-virtual {v5, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v5
++
++    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v5
++
++    invoke-static {v1, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_5b
++
++    .line 166
++    .end local v4    # "audioFormatStr":Ljava/lang/String;
++    :sswitch_4f
++    const-string v4, "ENCODING_PCM_32BIT"
++
++    .line 167
++    .restart local v4    # "audioFormatStr":Ljava/lang/String;
++    goto :goto_5b
++
++    .line 163
++    .end local v4    # "audioFormatStr":Ljava/lang/String;
++    :sswitch_52
++    const-string v4, "ENCODING_PCM_24BIT_PACKED"
++
++    .line 164
++    .restart local v4    # "audioFormatStr":Ljava/lang/String;
++    goto :goto_5b
++
++    .line 169
++    .end local v4    # "audioFormatStr":Ljava/lang/String;
++    :sswitch_55
++    const-string v4, "ENCODING_PCM_FLOAT"
++
++    .line 170
++    .restart local v4    # "audioFormatStr":Ljava/lang/String;
++    goto :goto_5b
++
++    .line 160
++    .end local v4    # "audioFormatStr":Ljava/lang/String;
++    :sswitch_58
++    const-string v4, "ENCODING_PCM_16BIT"
++
++    .line 161
++    .restart local v4    # "audioFormatStr":Ljava/lang/String;
++    nop
++
++    .line 178
++    :goto_5b
++    const-string/jumbo v5, "{\"name\":\"sea_record\",\"audio_event\":{\"seaaudio_samplerate\":\"%s\",\"seaaudio_channel\":\"%s\",\"seaaudio_format\":\"%s\",\"seaaudio_status\":\"%s\"},\"dgt\":\"null\",\"audio_ext\":\"null\" }"
++
++    filled-new-array {v0, v3, v4, v2}, [Ljava/lang/Object;
++
++    move-result-object v6
++
++    invoke-static {v5, v6}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
++
++    move-result-object v5
++
++    .line 180
++    .local v5, "result":Ljava/lang/String;
++    new-instance v6, Ljava/lang/StringBuilder;
++
++    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v7, "reportRecorderDailyUse:"
++
++    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v6
++
++    invoke-static {v1, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 182
++    :try_start_7c
++    iget-object v6, p0, Landroid/media/MQSUtils;->mMiuiXlog:Landroid/media/MiuiXlog;
++
++    invoke-virtual {v6, v5}, Landroid/media/MiuiXlog;->miuiXlogSend(Ljava/lang/String;)I
++    :try_end_81
++    .catchall {:try_start_7c .. :try_end_81} :catchall_82
++
++    .line 185
++    goto :goto_88
++
++    .line 183
++    :catchall_82
++    move-exception v6
++
++    .line 184
++    .local v6, "e":Ljava/lang/Throwable;
++    const-string v7, "can not use miuiXlogSend!!!"
++
++    invoke-static {v1, v7}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 186
++    .end local v6    # "e":Ljava/lang/Throwable;
++    :goto_88
++    return-void
++
++    nop
++
++    :sswitch_data_8a
++    .sparse-switch
++        0x4 -> :sswitch_2f
++        0xc -> :sswitch_2c
++    .end sparse-switch
++
++    :sswitch_data_94
++    .sparse-switch
++        0x2 -> :sswitch_58
++        0x4 -> :sswitch_55
++        0x15 -> :sswitch_52
++        0x16 -> :sswitch_4f
++    .end sparse-switch
++.end method
+diff --git a/smali_classes8/android/media/audiozoomfx/AudioVendorManager.smali b/smali_classes8/android/media/audiozoomfx/AudioVendorManager.smali
+new file mode 100644
+index 0000000..53198b8
+--- /dev/null
++++ b/smali_classes8/android/media/audiozoomfx/AudioVendorManager.smali
+@@ -0,0 +1,59 @@
++.class public interface abstract Landroid/media/audiozoomfx/AudioVendorManager;
++.super Ljava/lang/Object;
++.source "AudioVendorManager.java"
++
++
++# virtual methods
++.method public abstract createAudioEffects(I)Z
++.end method
++
++.method public abstract createAudioObject()Z
++.end method
++
++.method public abstract createAudioObject(Landroid/media/AudioParaManger$EventListener;)Z
++.end method
++
++.method public abstract createAudioObject(Landroid/media/AudioParaManger$EventListener;Landroid/media/AudioParaManger$TuneListener;)Z
++.end method
++
++.method public abstract initAudioVendor(IIIDDDDDZI[IIILandroid/media/AudioManager;Ljava/lang/ref/WeakReference;)Z
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "(IIIDDDDDZI[III",
++            "Landroid/media/AudioManager;",
++            "Ljava/lang/ref/WeakReference<",
++            "Landroid/media/MediaRecorder;",
++            ">;)Z"
++        }
++    .end annotation
++.end method
++
++.method public abstract prepare()V
++.end method
++
++.method public abstract releaseAudioEffect()V
++.end method
++
++.method public abstract setAudioFocus(DDDDIIIIII)I
++.end method
++
++.method public abstract setAudioWindNoise(Z)V
++.end method
++
++.method public abstract setAudioZoom(IZ)V
++.end method
++
++.method public abstract setAudioZoomLevel(D)V
++.end method
++
++.method public abstract setRecordType(I)V
++.end method
++
++.method public abstract setSensorAngleRange(I)I
++.end method
++
++.method public abstract setUserGain(D)V
++.end method
++
++.method public abstract setUserMode(Z)V
++.end method
+

@@ -1,0 +1,867 @@
+diff --git a/smali_classes8/android/media/audiozoomfx/WhiteListAppUtil.smali b/smali_classes8/android/media/audiozoomfx/WhiteListAppUtil.smali
+new file mode 100644
+index 0000000..6b33406
+--- /dev/null
++++ b/smali_classes8/android/media/audiozoomfx/WhiteListAppUtil.smali
+@@ -0,0 +1,688 @@
++.class public Landroid/media/audiozoomfx/WhiteListAppUtil;
++.super Ljava/lang/Object;
++.source "WhiteListAppUtil.java"
++
++
++# static fields
++.field private static final MI_CLOUD_KEY_NAME_WHITELIST_PACKAGE:Ljava/lang/String; = "audioZoomThirdAppWhiteListPackage"
++
++.field private static final MI_CLOUD_KEY_NAME_WHITELIST_SIGNATURE:Ljava/lang/String; = "audioZoomThirdAppWhiteListSignature"
++
++.field private static final PACKAGE_NAME_QQMUSIC:Ljava/lang/String; = "com.tencent.qqmusic"
++
++.field private static final SIGNATURE_QQMUSIC_DEBUG:Ljava/lang/String; = "85b2f9cbeaa08ba07397cff96ed64ea5ab6b40596d39ad0bfa76cd2a675f8a5c"
++
++.field private static final SIGNATURE_QQMUSIC_RELEASE:Ljava/lang/String; = "bf3db8c6cbbf11104eb62fc20e9dfb27b37445d84bdb529241ed498b0044fa1e"
++
++.field private static final TAG:Ljava/lang/String; = "audio_WhiteListAppUtil"
++
++.field private static final WHITELIST_PACKAGE:Ljava/util/ArrayList;
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "Ljava/util/ArrayList<",
++            "Ljava/lang/String;",
++            ">;"
++        }
++    .end annotation
++.end field
++
++.field private static final WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "Ljava/util/ArrayList<",
++            "Ljava/lang/String;",
++            ">;"
++        }
++    .end annotation
++.end field
++
++
++# direct methods
++.method static constructor <clinit>()V
++    .registers 1
++
++    .line 33
++    new-instance v0, Ljava/util/ArrayList;
++
++    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
++
++    sput-object v0, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_PACKAGE:Ljava/util/ArrayList;
++
++    .line 34
++    new-instance v0, Ljava/util/ArrayList;
++
++    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
++
++    sput-object v0, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    return-void
++.end method
++
++.method public constructor <init>()V
++    .registers 1
++
++    .line 20
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method private static checkPackageName(Ljava/lang/String;)Z
++    .registers 2
++    .param p0, "pkgName"    # Ljava/lang/String;
++
++    .line 86
++    sget-object v0, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_PACKAGE:Ljava/util/ArrayList;
++
++    invoke-virtual {v0, p0}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    return v0
++.end method
++
++.method private static checkSignature(Landroid/content/Context;Ljava/lang/String;)Z
++    .registers 10
++    .param p0, "context"    # Landroid/content/Context;
++    .param p1, "packageName"    # Ljava/lang/String;
++
++    .line 90
++    const/4 v0, 0x0
++
++    if-nez p0, :cond_4
++
++    return v0
++
++    .line 94
++    :cond_4
++    :try_start_4
++    invoke-virtual {p0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object v1
++
++    .line 95
++    .local v1, "pm":Landroid/content/pm/PackageManager;
++    nop
++
++    .line 96
++    const/high16 v2, 0x8000000
++
++    invoke-virtual {v1, p1, v2}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
++
++    move-result-object v2
++
++    .line 97
++    .local v2, "packageInfo":Landroid/content/pm/PackageInfo;
++    if-eqz v2, :cond_40
++
++    iget-object v3, v2, Landroid/content/pm/PackageInfo;->signingInfo:Landroid/content/pm/SigningInfo;
++
++    if-nez v3, :cond_16
++
++    goto :goto_40
++
++    .line 98
++    :cond_16
++    iget-object v3, v2, Landroid/content/pm/PackageInfo;->signingInfo:Landroid/content/pm/SigningInfo;
++
++    invoke-virtual {v3}, Landroid/content/pm/SigningInfo;->getApkContentsSigners()[Landroid/content/pm/Signature;
++
++    move-result-object v3
++
++    .line 99
++    .end local v2    # "packageInfo":Landroid/content/pm/PackageInfo;
++    .local v3, "signatures":[Landroid/content/pm/Signature;
++    nop
++
++    .line 105
++    if-eqz v3, :cond_3f
++
++    array-length v2, v3
++
++    if-nez v2, :cond_23
++
++    goto :goto_3f
++
++    .line 107
++    :cond_23
++    array-length v2, v3
++
++    move v4, v0
++
++    :goto_25
++    if-ge v4, v2, :cond_3e
++
++    aget-object v5, v3, v4
++
++    .line 108
++    .local v5, "signature":Landroid/content/pm/Signature;
++    invoke-virtual {v5}, Landroid/content/pm/Signature;->toByteArray()[B
++
++    move-result-object v6
++
++    invoke-static {v6}, Landroid/media/audiozoomfx/WhiteListAppUtil;->getFingerprint([B)Ljava/lang/String;
++
++    move-result-object v6
++
++    .line 109
++    .local v6, "sig":Ljava/lang/String;
++    sget-object v7, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    invoke-virtual {v7, v6}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
++
++    move-result v7
++    :try_end_37
++    .catch Ljava/lang/Exception; {:try_start_4 .. :try_end_37} :catch_41
++
++    if-eqz v7, :cond_3b
++
++    .line 110
++    const/4 v0, 0x1
++
++    return v0
++
++    .line 107
++    .end local v5    # "signature":Landroid/content/pm/Signature;
++    .end local v6    # "sig":Ljava/lang/String;
++    :cond_3b
++    add-int/lit8 v4, v4, 0x1
++
++    goto :goto_25
++
++    .line 115
++    .end local v1    # "pm":Landroid/content/pm/PackageManager;
++    .end local v3    # "signatures":[Landroid/content/pm/Signature;
++    :cond_3e
++    goto :goto_5a
++
++    .line 105
++    .restart local v1    # "pm":Landroid/content/pm/PackageManager;
++    .restart local v3    # "signatures":[Landroid/content/pm/Signature;
++    :cond_3f
++    :goto_3f
++    return v0
++
++    .line 97
++    .end local v3    # "signatures":[Landroid/content/pm/Signature;
++    .restart local v2    # "packageInfo":Landroid/content/pm/PackageInfo;
++    :cond_40
++    :goto_40
++    return v0
++
++    .line 113
++    .end local v1    # "pm":Landroid/content/pm/PackageManager;
++    .end local v2    # "packageInfo":Landroid/content/pm/PackageInfo;
++    :catch_41
++    move-exception v1
++
++    .line 114
++    .local v1, "e":Ljava/lang/Exception;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "checkSignature exception: "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string v3, "audio_WhiteListAppUtil"
++
++    invoke-static {v3, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 116
++    .end local v1    # "e":Ljava/lang/Exception;
++    :goto_5a
++    return v0
++.end method
++
++.method private static getFingerprint([B)Ljava/lang/String;
++    .registers 9
++    .param p0, "certificateBytes"    # [B
++
++    .line 121
++    :try_start_0
++    const-string v0, "SHA-256"
++
++    invoke-static {v0}, Ljava/security/MessageDigest;->getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;
++
++    move-result-object v0
++
++    .line 122
++    .local v0, "messageDigest":Ljava/security/MessageDigest;
++    invoke-virtual {v0, p0}, Ljava/security/MessageDigest;->update([B)V
++
++    .line 123
++    invoke-virtual {v0}, Ljava/security/MessageDigest;->digest()[B
++
++    move-result-object v1
++
++    .line 125
++    .local v1, "digest":[B
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    const/16 v3, 0x40
++
++    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(I)V
++
++    .line 126
++    .local v2, "hexString":Ljava/lang/StringBuilder;
++    array-length v3, v1
++
++    const/4 v4, 0x0
++
++    :goto_16
++    if-ge v4, v3, :cond_31
++
++    aget-byte v5, v1, v4
++
++    .line 128
++    .local v5, "b":B
++    const-string v6, "%02x"
++
++    and-int/lit16 v7, v5, 0xff
++
++    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
++
++    move-result-object v7
++
++    filled-new-array {v7}, [Ljava/lang/Object;
++
++    move-result-object v7
++
++    invoke-static {v6, v7}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
++
++    move-result-object v6
++
++    invoke-virtual {v2, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    .line 126
++    nop
++
++    .end local v5    # "b":B
++    add-int/lit8 v4, v4, 0x1
++
++    goto :goto_16
++
++    .line 130
++    :cond_31
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++    :try_end_35
++    .catch Ljava/security/NoSuchAlgorithmException; {:try_start_0 .. :try_end_35} :catch_36
++    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_35} :catch_36
++
++    return-object v3
++
++    .line 131
++    .end local v0    # "messageDigest":Ljava/security/MessageDigest;
++    .end local v1    # "digest":[B
++    .end local v2    # "hexString":Ljava/lang/StringBuilder;
++    :catch_36
++    move-exception v0
++
++    .line 132
++    .local v0, "e":Ljava/lang/Exception;
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "getFingerprint exception: "
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "audio_WhiteListAppUtil"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 134
++    .end local v0    # "e":Ljava/lang/Exception;
++    const-string v0, ""
++
++    return-object v0
++.end method
++
++.method private static declared-synchronized inWhiteListApp(Landroid/content/Context;)Z
++    .registers 9
++    .param p0, "context"    # Landroid/content/Context;
++
++    const-class v0, Landroid/media/audiozoomfx/WhiteListAppUtil;
++
++    monitor-enter v0
++
++    .line 46
++    const/4 v1, 0x0
++
++    if-nez p0, :cond_8
++
++    monitor-exit v0
++
++    return v1
++
++    .line 49
++    :cond_8
++    :try_start_8
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_PACKAGE:Ljava/util/ArrayList;
++
++    invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
++
++    .line 50
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_PACKAGE:Ljava/util/ArrayList;
++
++    const-string v3, "com.tencent.qqmusic"
++
++    invoke-virtual {v2, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 51
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
++
++    .line 52
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    const-string v3, "85b2f9cbeaa08ba07397cff96ed64ea5ab6b40596d39ad0bfa76cd2a675f8a5c"
++
++    invoke-virtual {v2, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 53
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    const-string v3, "bf3db8c6cbbf11104eb62fc20e9dfb27b37445d84bdb529241ed498b0044fa1e"
++
++    invoke-virtual {v2, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++
++    .line 56
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_PACKAGE:Ljava/util/ArrayList;
++
++    const-string v3, "audioZoomThirdAppWhiteListPackage"
++
++    invoke-static {p0, v2, v3}, Landroid/media/audiozoomfx/WhiteListAppUtil;->parseCloudData(Landroid/content/Context;Ljava/util/ArrayList;Ljava/lang/String;)V
++
++    .line 57
++    sget-object v2, Landroid/media/audiozoomfx/WhiteListAppUtil;->WHITELIST_SIGNATURE:Ljava/util/ArrayList;
++
++    const-string v3, "audioZoomThirdAppWhiteListSignature"
++
++    invoke-static {p0, v2, v3}, Landroid/media/audiozoomfx/WhiteListAppUtil;->parseCloudData(Landroid/content/Context;Ljava/util/ArrayList;Ljava/lang/String;)V
++
++    .line 59
++    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
++
++    move-result-object v2
++
++    .line 60
++    .local v2, "packageName":Ljava/lang/String;
++    invoke-virtual {v2}, Ljava/lang/String;->toLowerCase()Ljava/lang/String;
++
++    move-result-object v3
++
++    invoke-static {v3}, Landroid/media/audiozoomfx/WhiteListAppUtil;->checkPackageName(Ljava/lang/String;)Z
++
++    move-result v3
++
++    .line 61
++    .local v3, "pkgNameCheckPassed":Z
++    invoke-static {p0, v2}, Landroid/media/audiozoomfx/WhiteListAppUtil;->checkSignature(Landroid/content/Context;Ljava/lang/String;)Z
++
++    move-result v4
++
++    .line 62
++    .local v4, "signatureCheckPassed":Z
++    const-string v5, "audio_WhiteListAppUtil"
++
++    new-instance v6, Ljava/lang/StringBuilder;
++
++    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v7, "inWhiteListApp packageName: "
++
++    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    const-string v7, ", pkgNameCheckPassed: "
++
++    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6, v3}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    const-string v7, ", signatureCheckPassed: "
++
++    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6, v4}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
++
++    move-result-object v6
++
++    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v6
++
++    invoke-static {v5, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_71
++    .catchall {:try_start_8 .. :try_end_71} :catchall_78
++
++    .line 63
++    if-eqz v3, :cond_76
++
++    if-eqz v4, :cond_76
++
++    const/4 v1, 0x1
++
++    :cond_76
++    monitor-exit v0
++
++    return v1
++
++    .line 45
++    .end local v2    # "packageName":Ljava/lang/String;
++    .end local v3    # "pkgNameCheckPassed":Z
++    .end local v4    # "signatureCheckPassed":Z
++    .end local p0    # "context":Landroid/content/Context;
++    :catchall_78
++    move-exception p0
++
++    :try_start_79
++    monitor-exit v0
++    :try_end_7a
++    .catchall {:try_start_79 .. :try_end_7a} :catchall_78
++
++    throw p0
++.end method
++
++.method private static isDeviceSupport()Z
++    .registers 2
++
++    .line 42
++    const-string v0, "ro.vendor.audio.zoom.directionalrecord.support"
++
++    const/4 v1, 0x0
++
++    invoke-static {v0, v1}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public static isSupportedApp(Landroid/content/Context;)Z
++    .registers 2
++    .param p0, "context"    # Landroid/content/Context;
++
++    .line 38
++    invoke-static {p0}, Landroid/media/audiozoomfx/WhiteListAppUtil;->inWhiteListApp(Landroid/content/Context;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_e
++
++    invoke-static {}, Landroid/media/audiozoomfx/WhiteListAppUtil;->isDeviceSupport()Z
++
++    move-result v0
++
++    if-eqz v0, :cond_e
++
++    const/4 v0, 0x1
++
++    goto :goto_f
++
++    :cond_e
++    const/4 v0, 0x0
++
++    :goto_f
++    return v0
++.end method
++
++.method private static parseCloudData(Landroid/content/Context;Ljava/util/ArrayList;Ljava/lang/String;)V
++    .registers 8
++    .param p0, "context"    # Landroid/content/Context;
++    .param p2, "key"    # Ljava/lang/String;
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "(",
++            "Landroid/content/Context;",
++            "Ljava/util/ArrayList<",
++            "Ljava/lang/String;",
++            ">;",
++            "Ljava/lang/String;",
++            ")V"
++        }
++    .end annotation
++
++    .line 67
++    .local p1, "list":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/lang/String;>;"
++    invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
++
++    move-result-object v0
++
++    invoke-static {v0, p2}, Landroid/provider/Settings$Global;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 69
++    .local v0, "cloudStr":Ljava/lang/String;
++    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_f
++
++    return-void
++
++    .line 71
++    :cond_f
++    :try_start_f
++    new-instance v1, Lorg/json/JSONArray;
++
++    invoke-direct {v1, v0}, Lorg/json/JSONArray;-><init>(Ljava/lang/String;)V
++
++    .line 73
++    .local v1, "jsonArray":Lorg/json/JSONArray;
++    invoke-virtual {p1}, Ljava/util/ArrayList;->clear()V
++
++    .line 74
++    const/4 v2, 0x0
++
++    .local v2, "i":I
++    :goto_18
++    invoke-virtual {v1}, Lorg/json/JSONArray;->length()I
++
++    move-result v3
++
++    if-ge v2, v3, :cond_2e
++
++    .line 75
++    invoke-virtual {v1, v2}, Lorg/json/JSONArray;->optString(I)Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 76
++    .local v3, "item":Ljava/lang/String;
++    invoke-static {v3}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
++
++    move-result v4
++
++    if-nez v4, :cond_2b
++
++    .line 77
++    invoke-virtual {p1, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
++    :try_end_2b
++    .catch Lorg/json/JSONException; {:try_start_f .. :try_end_2b} :catch_2f
++
++    .line 74
++    .end local v3    # "item":Ljava/lang/String;
++    :cond_2b
++    add-int/lit8 v2, v2, 0x1
++
++    goto :goto_18
++
++    .line 82
++    .end local v1    # "jsonArray":Lorg/json/JSONArray;
++    .end local v2    # "i":I
++    :cond_2e
++    goto :goto_48
++
++    .line 80
++    :catch_2f
++    move-exception v1
++
++    .line 81
++    .local v1, "e":Lorg/json/JSONException;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "parseCloudData exception: "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string v3, "audio_WhiteListAppUtil"
++
++    invoke-static {v3, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 83
++    .end local v1    # "e":Lorg/json/JSONException;
++    :goto_48
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AGC.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AGC.smali
+new file mode 100644
+index 0000000..488ac16
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AGC.smali
+@@ -0,0 +1,25 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AGC;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AGC"
++.end annotation
++
++
++# virtual methods
++.method public abstract setAutoMode()Z
++.end method
++
++.method public abstract setUserGain(D)Z
++.end method
++
++.method public abstract setUserMode()Z
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing.smali
+new file mode 100644
+index 0000000..c9b4ebf
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing.smali
+@@ -0,0 +1,22 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AudioCustomProcessing;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioCustomProcessing"
++.end annotation
++
++
++# virtual methods
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction.smali
+new file mode 100644
+index 0000000..35a71ba
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction.smali
+@@ -0,0 +1,28 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AudioNoiseReduction;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioNoiseReduction"
++.end annotation
++
++
++# virtual methods
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
++
++.method public abstract setDefault(Z)Z
++.end method
++
++.method public abstract setGain(D)Z
++.end method
+diff --git a/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioSourceTracking.smali b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioSourceTracking.smali
+new file mode 100644
+index 0000000..320528c
+--- /dev/null
++++ b/smali_classes8/com/android/ozoaudio/lib/OzoAudio$AudioSourceTracking.smali
+@@ -0,0 +1,73 @@
++.class public interface abstract Lcom/android/ozoaudio/lib/OzoAudio$AudioSourceTracking;
++.super Ljava/lang/Object;
++.source "OzoAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/ozoaudio/lib/OzoAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioSourceTracking"
++.end annotation
++
++
++# virtual methods
++.method public abstract createSource(DDD)Z
++.end method
++
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
++
++.method public abstract removeSource(I)Z
++.end method
++
++.method public abstract resetSources()Z
++.end method
++
++.method public abstract setCreationSensitivity(D)Z
++.end method
++
++.method public abstract setDeactivationDelay(D)Z
++.end method
++
++.method public abstract setDeviceOrientation(DDD)Z
++.end method
++
++.method public abstract setGain(D)Z
++.end method
++
++.method public abstract setHeight(D)Z
++.end method
++
++.method public abstract setMaxSources(I)Z
++.end method
++
++.method public abstract setNoiseTolerance(D)Z
++.end method
++
++.method public abstract setRemovalDelay(D)Z
++.end method
++
++.method public abstract setSourceStability(D)Z
++.end method
++
++.method public abstract setWidth(D)Z
++.end method
++
++.method public abstract startTracking(I)Z
++.end method
++
++.method public abstract stopTracking()Z
++.end method
++
++.method public abstract visualUpdate(Lcom/android/ozoaudio/lib/OzoAudio$VisualData;)Z
++.end method
++
++.method public abstract visualUpdateReady()Z
++.end method
+
