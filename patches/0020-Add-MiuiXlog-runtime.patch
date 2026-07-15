@@ -1,0 +1,271 @@
+diff --git a/smali_classes8/android/media/MiuiXlog.smali b/smali_classes8/android/media/MiuiXlog.smali
+new file mode 100644
+--- /dev/null
++++ b/smali_classes8/android/media/MiuiXlog.smali
+@@ -0,0 +1,266 @@
++.class public Landroid/media/MiuiXlog;
++.super Ljava/lang/Object;
++.source "MiuiXlog.java"
++
++
++# static fields
++.field private static final TAG:Ljava/lang/String; = "MiuiXlog"
++
++.field public static final TR6_XLOG_DISABLE:I = 0x1
++
++.field public static final TR6_XLOG_ENABLE:I
++
++.field private static lib_existent:Z
++
++
++# direct methods
++.method static constructor <clinit>()V
++    .registers 3
++
++    .line 33
++    const/4 v0, 0x1
++
++    :try_start_1
++    sput-boolean v0, Landroid/media/MiuiXlog;->lib_existent:Z
++
++    .line 34
++    const-string v0, "miuixlog"
++
++    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
++    :try_end_8
++    .catchall {:try_start_1 .. :try_end_8} :catchall_9
++
++    .line 38
++    goto :goto_14
++
++    .line 35
++    :catchall_9
++    move-exception v0
++
++    .line 36
++    .local v0, "e":Ljava/lang/Throwable;
++    const/4 v1, 0x0
++
++    sput-boolean v1, Landroid/media/MiuiXlog;->lib_existent:Z
++
++    .line 37
++    const-string v1, "MiuiXlog"
++
++    const-string v2, "can not find libmiuixlog.so!!!"
++
++    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 39
++    .end local v0    # "e":Ljava/lang/Throwable;
++    :goto_14
++    return-void
++.end method
++
++.method public constructor <init>()V
++    .registers 1
++
++    .line 18
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 20
++    return-void
++.end method
++
++.method private native native_xlogCheckPermission([BI)Z
++.end method
++
++.method private native native_xlogSend([B)I
++.end method
++
++
++# virtual methods
++.method public checkXlogPermission(Ljava/lang/String;I)Z
++    .registers 7
++    .param p1, "eventName"    # Ljava/lang/String;
++    .param p2, "level"    # I
++
++    .line 59
++    const-string v0, "MiuiXlog"
++
++    const/4 v1, 0x0
++
++    .line 61
++    .local v1, "result":Z
++    :try_start_3
++    const-string v2, "UTF-8"
++
++    invoke-virtual {p1, v2}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
++
++    move-result-object v2
++
++    .line 62
++    .local v2, "eventNameByte":[B
++    sget-boolean v3, Landroid/media/MiuiXlog;->lib_existent:Z
++
++    if-eqz v3, :cond_13
++
++    .line 63
++    invoke-direct {p0, v2, p2}, Landroid/media/MiuiXlog;->native_xlogCheckPermission([BI)Z
++
++    move-result v3
++
++    move v1, v3
++
++    .end local v1    # "result":Z
++    .local v3, "result":Z
++    goto :goto_18
++
++    .line 65
++    .end local v3    # "result":Z
++    .restart local v1    # "result":Z
++    :cond_13
++    const-string v3, "can not find native_xlogCheckPermission!!!"
++
++    invoke-static {v0, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_18
++    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_18} :catch_19
++
++    .line 69
++    .end local v2    # "eventNameByte":[B
++    :goto_18
++    goto :goto_1d
++
++    .line 67
++    :catch_19
++    move-exception v2
++
++    .line 68
++    .local v2, "e":Ljava/lang/Exception;
++    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
++
++    .line 70
++    .end local v2    # "e":Ljava/lang/Exception;
++    :goto_1d
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "eventName = "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    const-string v3, " level = "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    const-string v3, " result = "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v0, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 71
++    return v1
++.end method
++
++.method public miuiXlogSend(Ljava/lang/String;)I
++    .registers 7
++    .param p1, "str"    # Ljava/lang/String;
++
++    .line 42
++    const/16 v0, 0x200
++
++    new-array v0, v0, [B
++
++    .line 43
++    .local v0, "msg":[B
++    const/4 v1, -0x1
++
++    .line 45
++    .local v1, "result":I
++    :try_start_5
++    const-string v2, "UTF-8"
++
++    invoke-virtual {p1, v2}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
++
++    move-result-object v2
++    :try_end_b
++    .catch Ljava/lang/Exception; {:try_start_5 .. :try_end_b} :catch_d
++
++    move-object v0, v2
++
++    .line 48
++    goto :goto_11
++
++    .line 46
++    :catch_d
++    move-exception v2
++
++    .line 47
++    .local v2, "e":Ljava/lang/Exception;
++    invoke-virtual {v2}, Ljava/lang/Exception;->printStackTrace()V
++
++    .line 49
++    .end local v2    # "e":Ljava/lang/Exception;
++    :goto_11
++    sget-boolean v2, Landroid/media/MiuiXlog;->lib_existent:Z
++
++    const-string v3, "MiuiXlog"
++
++    if-eqz v2, :cond_1c
++
++    .line 50
++    invoke-direct {p0, v0}, Landroid/media/MiuiXlog;->native_xlogSend([B)I
++
++    move-result v1
++
++    goto :goto_21
++
++    .line 52
++    :cond_1c
++    const-string v2, "can not find native_xlogSend!!!"
++
++    invoke-static {v3, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 54
++    :goto_21
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string/jumbo v4, "write dev/xlog result is : "
++
++    invoke-virtual {v2, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v3, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 55
++    return v1
++.end method
