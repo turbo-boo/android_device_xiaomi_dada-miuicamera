@@ -1,0 +1,45 @@
+diff --git a/smali/Ib/e.smali b/smali/Ib/e.smali
+--- a/smali/Ib/e.smali
++++ b/smali/Ib/e.smali
+@@ -344,6 +344,15 @@
+ 
+     move-result-object v0
+ 
++    iget-object v6, v1, LIb/b;->e:LIb/q;
++
++    iget-boolean v6, v6, LIb/q;->w:Z
++
++    if-eqz v6, :cond_dada_ozo_position_mask_done
++
++    const v7, 0x60000c
++
++    :cond_dada_ozo_position_mask_done
+     invoke-virtual {v0, v7}, Landroid/media/AudioFormat$Builder;->setChannelMask(I)Landroid/media/AudioFormat$Builder;
+ 
+     move-result-object v0
+@@ -484,5 +493,7 @@
+ 
+     :goto_7
++    const/16 v5, 0xf
++
+     invoke-virtual {v6, v5}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
+ 
+     :cond_d
+diff --git a/smali_classes2/com/android/camera/module/video/x.smali b/smali_classes2/com/android/camera/module/video/x.smali
+--- a/smali_classes2/com/android/camera/module/video/x.smali
++++ b/smali_classes2/com/android/camera/module/video/x.smali
+@@ -2619,6 +2619,14 @@
+ 
+     iput v4, v8, LIb/q;->b:I
+ 
++    if-eqz p2, :cond_dada_ozo_channels_done
++
++    const/4 v4, 0x4
++
++    iput v4, v8, LIb/q;->b:I
++
++    :cond_dada_ozo_channels_done
++
+     iget v4, v3, Landroid/media/CamcorderProfile;->audioSampleRate:I
+ 
+     iput v4, v8, LIb/q;->e:I
