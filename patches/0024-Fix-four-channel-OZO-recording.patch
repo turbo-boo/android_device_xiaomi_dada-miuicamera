@@ -17,7 +17,22 @@ diff --git a/smali/Ib/e.smali b/smali/Ib/e.smali
      invoke-virtual {v0, v7}, Landroid/media/AudioFormat$Builder;->setChannelMask(I)Landroid/media/AudioFormat$Builder;
  
      move-result-object v0
-@@ -484,5 +493,7 @@
+@@ -396,5 +405,14 @@
+     :cond_b
+     :goto_4
++    iget-object v13, v1, LIb/b;->e:LIb/q;
++
++    iget-boolean v13, v13, LIb/q;->w:Z
++
++    if-eqz v13, :cond_dada_ozo_config_index_done
++
++    const/16 v7, 0xf
++
++    :cond_dada_ozo_config_index_done
+     if-lez v7, :cond_c
+ 
+     invoke-virtual {v6, v7}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
+@@ -484,5 +502,7 @@
  
      :goto_7
 +    const/16 v5, 0xf
