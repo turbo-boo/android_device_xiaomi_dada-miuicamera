@@ -1,0 +1,1190 @@
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen.smali
+new file mode 100644
+index 0000000..4b98b75
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen.smali
+@@ -0,0 +1,22 @@
++.class public interface abstract Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++.super Ljava/lang/Object;
++.source "MiwnsAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/miwnsaudio/lib/MiwnsAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x609
++    name = "AudioWindscreen"
++.end annotation
++
++
++# virtual methods
++.method public abstract disable()Z
++.end method
++
++.method public abstract enable()Z
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$MiwnsAudioParams.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$MiwnsAudioParams.smali
+new file mode 100644
+index 0000000..2139bc7
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$MiwnsAudioParams.smali
+@@ -0,0 +1,41 @@
++.class public final Lcom/android/miwnsaudio/lib/MiwnsAudio$MiwnsAudioParams;
++.super Ljava/lang/Object;
++.source "MiwnsAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/miwnsaudio/lib/MiwnsAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x19
++    name = "MiwnsAudioParams"
++.end annotation
++
++
++# static fields
++.field public static final CONTROL_PARAM:Ljava/lang/String; = "control"
++
++.field public static final DISABLED:Ljava/lang/String; = "off"
++
++.field public static final DUMMY:Ljava/lang/String; = "-"
++
++.field public static final ENABLED:Ljava/lang/String; = "on"
++
++.field public static final FEAT_WINDSCREEN:Ljava/lang/String; = "wnr"
++
++.field public static final NOTIFICATION_PARAM:Ljava/lang/String; = "notification"
++
++.field public static final WINDSCREEN_NOTIFICATION:Ljava/lang/String; = "wnr"
++
++
++# direct methods
++.method private constructor <init>()V
++    .locals 0
++
++    .line 18
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$RequestDataParams.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$RequestDataParams.smali
+new file mode 100644
+index 0000000..1c90b65
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio$RequestDataParams.smali
+@@ -0,0 +1,29 @@
++.class public final Lcom/android/miwnsaudio/lib/MiwnsAudio$RequestDataParams;
++.super Ljava/lang/Object;
++.source "MiwnsAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/miwnsaudio/lib/MiwnsAudio;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x19
++    name = "RequestDataParams"
++.end annotation
++
++
++# static fields
++.field public static final WIND:J = 0x1L
++
++
++# direct methods
++.method private constructor <init>()V
++    .locals 0
++
++    .line 45
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio.smali
+new file mode 100644
+index 0000000..1b16117
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudio.smali
+@@ -0,0 +1,66 @@
++.class public interface abstract Lcom/android/miwnsaudio/lib/MiwnsAudio;
++.super Ljava/lang/Object;
++.source "MiwnsAudio.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/MemberClasses;
++    value = {
++        Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;,
++        Lcom/android/miwnsaudio/lib/MiwnsAudio$RequestDataParams;,
++        Lcom/android/miwnsaudio/lib/MiwnsAudio$MiwnsAudioParams;
++    }
++.end annotation
++
++
++# static fields
++.field public static final TAG:Ljava/lang/String; = "MiwnsAudio"
++
++
++# direct methods
++.method public static create()Lcom/android/miwnsaudio/lib/MiwnsAudio;
++    .locals 1
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 138
++    invoke-static {}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->create()Lcom/android/miwnsaudio/lib/MiwnsAudio;
++
++    move-result-object v0
++
++    return-object v0
++.end method
++
++
++# virtual methods
++.method public abstract getSessionId()I
++.end method
++
++.method public abstract getSessionIdMediaRecorderParameter()Ljava/lang/String;
++.end method
++
++.method public abstract getWindscreenControl()Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++.end method
++
++.method public abstract prepare()Z
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++.end method
++
++.method public abstract release()Z
++.end method
++
++.method public abstract setEffect()V
++.end method
++
++.method public abstract setEffectChannelMask(J)V
++.end method
++
++.method public abstract setInitParameters(Ljava/lang/String;I)V
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioEffect.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioEffect.smali
+new file mode 100644
+index 0000000..000096b
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioEffect.smali
+@@ -0,0 +1,245 @@
++.class public Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;
++.super Landroid/media/audiofx/AudioEffect;
++.source "MiwnsAudioEffect.java"
++
++
++# static fields
++.field private static final MIWNS_EFFECT_TYPE:Ljava/util/UUID;
++
++.field private static final MIWNS_EFFECT_UUID:Ljava/util/UUID;
++
++.field private static final TAG:Ljava/lang/String; = "MiwnsAudioEffect"
++
++
++# instance fields
++.field private final MIWNS_PARAM_SESSION_ID:I
++
++
++# direct methods
++.method static constructor <clinit>()V
++    .locals 1
++
++    .line 16
++    const-string v0, "56d6b082-1a83-455a-84a8-9db3a35cf533"
++
++    invoke-static {v0}, Ljava/util/UUID;->fromString(Ljava/lang/String;)Ljava/util/UUID;
++
++    move-result-object v0
++
++    sput-object v0, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->MIWNS_EFFECT_TYPE:Ljava/util/UUID;
++
++    .line 21
++    const-string v0, "7e384a3b-7850-4a64-a097-884250d8a837"
++
++    invoke-static {v0}, Ljava/util/UUID;->fromString(Ljava/lang/String;)Ljava/util/UUID;
++
++    move-result-object v0
++
++    sput-object v0, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->MIWNS_EFFECT_UUID:Ljava/util/UUID;
++
++    return-void
++.end method
++
++.method private constructor <init>(I)V
++    .locals 3
++    .param p1, "audioSession"    # I
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Ljava/lang/IllegalArgumentException;,
++            Ljava/lang/UnsupportedOperationException;,
++            Ljava/lang/RuntimeException;
++        }
++    .end annotation
++
++    .line 69
++    sget-object v0, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->MIWNS_EFFECT_TYPE:Ljava/util/UUID;
++
++    sget-object v1, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->MIWNS_EFFECT_UUID:Ljava/util/UUID;
++
++    const/4 v2, 0x0
++
++    invoke-direct {p0, v0, v1, v2, p1}, Landroid/media/audiofx/AudioEffect;-><init>(Ljava/util/UUID;Ljava/util/UUID;II)V
++
++    .line 23
++    const v0, 0x1b208
++
++    iput v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->MIWNS_PARAM_SESSION_ID:I
++
++    .line 70
++    return-void
++.end method
++
++.method public static create(I)Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;
++    .locals 5
++    .param p0, "audioSession"    # I
++
++    .line 35
++    const-string v0, "MiwnsAudioEffect"
++
++    const/4 v1, 0x0
++
++    .line 37
++    .local v1, "miwns":Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;
++    :try_start_0
++    new-instance v2, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;
++
++    invoke-direct {v2, p0}, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;-><init>(I)V
++    :try_end_0
++    .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_2
++    .catch Ljava/lang/UnsupportedOperationException; {:try_start_0 .. :try_end_0} :catch_1
++    .catch Ljava/lang/RuntimeException; {:try_start_0 .. :try_end_0} :catch_0
++
++    move-object v1, v2
++
++    .line 44
++    :goto_0
++    goto :goto_1
++
++    .line 42
++    :catch_0
++    move-exception v2
++
++    .line 43
++    .local v2, "e":Ljava/lang/RuntimeException;
++    const-string v3, "not enough memory"
++
++    invoke-static {v0, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    goto :goto_1
++
++    .line 40
++    .end local v2    # "e":Ljava/lang/RuntimeException;
++    :catch_1
++    move-exception v2
++
++    .line 41
++    .local v2, "e":Ljava/lang/UnsupportedOperationException;
++    const-string v3, "not enough resources"
++
++    invoke-static {v0, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .end local v2    # "e":Ljava/lang/UnsupportedOperationException;
++    goto :goto_0
++
++    .line 38
++    :catch_2
++    move-exception v2
++
++    .line 39
++    .local v2, "e":Ljava/lang/IllegalArgumentException;
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v4, "not implemented on this device"
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v3
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++
++    invoke-static {v0, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .end local v2    # "e":Ljava/lang/IllegalArgumentException;
++    goto :goto_0
++
++    .line 45
++    :goto_1
++    return-object v1
++.end method
++
++
++# virtual methods
++.method public getMiwnsSessionId()I
++    .locals 2
++
++    .line 99
++    const/4 v0, 0x4
++
++    new-array v0, v0, [B
++
++    .line 100
++    .local v0, "value":[B
++    const v1, 0x1b208
++
++    invoke-virtual {p0, v1, v0}, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->getParameter(I[B)I
++
++    .line 101
++    const/4 v1, 0x0
++
++    invoke-static {v0, v1}, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->byteArrayToInt([BI)I
++
++    move-result v1
++
++    return v1
++.end method
++
++.method public setMiwnsSessionId(I)I
++    .locals 3
++    .param p1, "id"    # I
++
++    .line 84
++    :try_start_0
++    invoke-static {p1}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string v1, "UTF-8"
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->getBytes(Ljava/lang/String;)[B
++
++    move-result-object v0
++
++    .line 85
++    .local v0, "sessionId":[B
++    const v1, 0x1b208
++
++    invoke-virtual {p0, v1, v0}, Lcom/android/miwnsaudio/lib/MiwnsAudioEffect;->setParameter(I[B)I
++
++    move-result v1
++    :try_end_0
++    .catch Ljava/io/UnsupportedEncodingException; {:try_start_0 .. :try_end_0} :catch_0
++
++    return v1
++
++    .line 86
++    .end local v0    # "sessionId":[B
++    :catch_0
++    move-exception v0
++
++    .line 87
++    .local v0, "e":Ljava/io/UnsupportedEncodingException;
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "Unable to set Miwns session ID: "
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    move-result-object v1
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "MiwnsAudioEffect"
++
++    invoke-static {v2, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 88
++    const/4 v1, -0x4
++
++    return v1
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl.smali
+new file mode 100644
+index 0000000..4aae72e
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl.smali
+@@ -0,0 +1,78 @@
++.class Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;
++.super Ljava/lang/Object;
++.source "MiwnsAudioImpl.java"
++
++# interfaces
++.implements Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingClass;
++    value = Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x2
++    name = "AudioWindscreenImpl"
++.end annotation
++
++
++# instance fields
++.field final synthetic this$0:Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++
++
++# direct methods
++.method private constructor <init>(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;)V
++    .locals 0
++
++    .line 25
++    iput-object p1, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;->this$0:Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method synthetic constructor <init>(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;Lcom/android/miwnsaudio/lib/MiwnsAudioImpl-IA;)V
++    .locals 0
++
++    invoke-direct {p0, p1}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;-><init>(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;)V
++
++    return-void
++.end method
++
++
++# virtual methods
++.method public disable()Z
++    .locals 3
++
++    .line 31
++    iget-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;->this$0:Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++
++    const-string/jumbo v1, "wnr"
++
++    const-string v2, "off"
++
++    invoke-static {v0, v1, v2}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->-$$Nest$msetValue(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++
++    return v0
++.end method
++
++.method public enable()Z
++    .locals 3
++
++    .line 27
++    iget-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;->this$0:Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++
++    const-string/jumbo v1, "wnr"
++
++    const-string v2, "on"
++
++    invoke-static {v0, v1, v2}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->-$$Nest$msetValue(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++
++    return v0
++.end method
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl-IA.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl-IA.smali
+new file mode 100644
+index 0000000..3c75b50
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl-IA.smali
+@@ -0,0 +1,3 @@
++.class public final synthetic Lcom/android/miwnsaudio/lib/MiwnsAudioImpl-IA;
++.super Ljava/lang/Object;
++.source "D8$$SyntheticClass"
+diff --git a/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl.smali b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl.smali
+new file mode 100644
+index 0000000..64197ab
+--- /dev/null
++++ b/smali_classes8/com/android/miwnsaudio/lib/MiwnsAudioImpl.smali
+@@ -0,0 +1,658 @@
++.class public Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++.super Ljava/lang/Object;
++.source "MiwnsAudioImpl.java"
++
++# interfaces
++.implements Lcom/android/miwnsaudio/lib/MiwnsAudio;
++
++
++# annotations
++.annotation system Ldalvik/annotation/MemberClasses;
++    value = {
++        Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;
++    }
++.end annotation
++
++
++# static fields
++.field private static final TAG:Ljava/lang/String; = "MiwnsAudio"
++
++
++# instance fields
++.field private mInitConfiguration:Ljava/lang/String;
++
++.field private mInitialized:Z
++
++.field private mMiwnsEffect:Z
++
++.field private mSessionId:I
++
++.field private mUUIDAvailable:Z
++
++.field private mWnr:Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++
++
++# direct methods
++.method static bridge synthetic -$$Nest$msetValue(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 0
++
++    invoke-direct {p0, p1, p2}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->setValue(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method private constructor <init>()V
++    .locals 2
++
++    .line 184
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    .line 17
++    const/4 v0, 0x0
++
++    iput-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mMiwnsEffect:Z
++
++    .line 19
++    const-string v1, ""
++
++    iput-object v1, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 20
++    iput-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mUUIDAvailable:Z
++
++    .line 21
++    iput-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    .line 185
++    new-instance v0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;
++
++    const/4 v1, 0x0
++
++    invoke-direct {v0, p0, v1}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl$AudioWindscreenImpl;-><init>(Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;Lcom/android/miwnsaudio/lib/MiwnsAudioImpl-IA;)V
++
++    iput-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mWnr:Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++
++    .line 186
++    return-void
++.end method
++
++.method public static create()Lcom/android/miwnsaudio/lib/MiwnsAudio;
++    .locals 2
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 189
++    const-string v0, "MiwnsAudio"
++
++    const-string v1, "MiwnsAudio create(eventlistener)."
++
++    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 190
++    new-instance v0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++
++    invoke-direct {v0}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;-><init>()V
++
++    .line 191
++    .local v0, "instance":Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++    return-object v0
++.end method
++
++.method private setControlInitParameter(Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 4
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++
++    .line 104
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_0
++
++    .line 105
++    const-string v0, "MiwnsAudio"
++
++    const-string v1, "Miwns processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 106
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 109
++    :cond_0
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "control="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, "="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, ";"
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 110
++    .local v0, "str":Ljava/lang/String;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v3, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    iput-object v2, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 111
++    return v1
++.end method
++
++.method private setNotificationParameter(Ljava/lang/String;)Z
++    .locals 4
++    .param p1, "notification"    # Ljava/lang/String;
++
++    .line 121
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_0
++
++    .line 122
++    const-string v0, "MiwnsAudio"
++
++    const-string v1, "Miwns processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 123
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 126
++    :cond_0
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v2, "notification="
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v2, ";"
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 127
++    .local v0, "str":Ljava/lang/String;
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v3, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v2
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    iput-object v2, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 128
++    return v1
++.end method
++
++.method private setRuntimeControlParameter(Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 2
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 139
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    if-nez v0, :cond_0
++
++    .line 140
++    const-string v0, "MiwnsAudio"
++
++    const-string v1, "Ozo processing not initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 141
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 146
++    :cond_0
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method private setValue(Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 3
++    .param p1, "key"    # Ljava/lang/String;
++    .param p2, "value"    # Ljava/lang/String;
++
++    .line 37
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    if-nez v0, :cond_0
++
++    .line 38
++    invoke-direct {p0, p1, p2}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->setControlInitParameter(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++
++    return v0
++
++    .line 42
++    :cond_0
++    :try_start_0
++    invoke-direct {p0, p1, p2}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->setRuntimeControlParameter(Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v0
++    :try_end_0
++    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
++
++    return v0
++
++    .line 43
++    :catch_0
++    move-exception v0
++
++    .line 44
++    .local v0, "e":Ljava/lang/Exception;
++    const-string/jumbo v1, "setValue (%s,%s) failed: "
++
++    filled-new-array {p1, p2}, [Ljava/lang/Object;
++
++    move-result-object v2
++
++    invoke-static {v1, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
++
++    move-result-object v1
++
++    const-string v2, "MiwnsAudio"
++
++    invoke-static {v2, v1, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
++
++    .line 47
++    .end local v0    # "e":Ljava/lang/Exception;
++    const/4 v0, 0x0
++
++    return v0
++.end method
++
++
++# virtual methods
++.method public declared-synchronized getInterfaceHash()Ljava/lang/String;
++    .locals 1
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    monitor-enter p0
++
++    .line 175
++    :try_start_0
++    const-string v0, "hash"
++    :try_end_0
++    .catchall {:try_start_0 .. :try_end_0} :catchall_0
++
++    monitor-exit p0
++
++    return-object v0
++
++    .line 175
++    .end local p0    # "this":Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;
++    :catchall_0
++    move-exception v0
++
++    :try_start_1
++    monitor-exit p0
++    :try_end_1
++    .catchall {:try_start_1 .. :try_end_1} :catchall_0
++
++    throw v0
++.end method
++
++.method public getInterfaceVersion()I
++    .locals 1
++
++    .line 180
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method public getSessionId()I
++    .locals 1
++
++    .line 77
++    iget v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mSessionId:I
++
++    return v0
++.end method
++
++.method public getSessionIdMediaRecorderParameter()Ljava/lang/String;
++    .locals 2
++
++    .line 82
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "miwns-session-id="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {p0}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->getSessionId()I
++
++    move-result v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    return-object v0
++.end method
++
++.method public getWindscreenControl()Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++    .locals 1
++
++    .line 67
++    iget-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mWnr:Lcom/android/miwnsaudio/lib/MiwnsAudio$AudioWindscreen;
++
++    return-object v0
++.end method
++
++.method public prepare()Z
++    .locals 2
++    .annotation system Ldalvik/annotation/Throws;
++        value = {
++            Landroid/os/RemoteException;
++        }
++    .end annotation
++
++    .line 151
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x1
++
++    if-ne v0, v1, :cond_0
++
++    .line 152
++    const-string v0, "MiwnsAudio"
++
++    const-string v1, "Miwns processing already initialized, invalid call"
++
++    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 153
++    const/4 v0, 0x0
++
++    return v0
++
++    .line 156
++    :cond_0
++    iput-boolean v1, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    .line 158
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    return v0
++.end method
++
++.method public release()Z
++    .locals 1
++
++    .line 170
++    const/4 v0, 0x1
++
++    return v0
++.end method
++
++.method public requestProcessingData(J)Z
++    .locals 8
++    .param p1, "flags"    # J
++
++    .line 52
++    iget-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitialized:Z
++
++    const/4 v1, 0x0
++
++    const-string v2, "MiwnsAudio"
++
++    const/4 v3, 0x1
++
++    if-ne v0, v3, :cond_0
++
++    .line 53
++    const-string v0, "Miwns processing already initialized, invalid call"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 54
++    return v1
++
++    .line 56
++    :cond_0
++    const-wide/16 v4, 0x1
++
++    and-long/2addr v4, p1
++
++    const-wide/16 v6, 0x0
++
++    cmp-long v0, v4, v6
++
++    if-lez v0, :cond_1
++
++    .line 57
++    const-string/jumbo v0, "wnr"
++
++    invoke-direct {p0, v0}, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->setNotificationParameter(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_1
++
++    .line 58
++    const-string v0, "Unable to enable data request for WIND"
++
++    invoke-static {v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    .line 59
++    return v1
++
++    .line 62
++    :cond_1
++    return v3
++.end method
++
++.method public setEffect()V
++    .locals 1
++
++    .line 72
++    const/4 v0, 0x1
++
++    iput-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mMiwnsEffect:Z
++
++    .line 73
++    return-void
++.end method
++
++.method public setEffectChannelMask(J)V
++    .locals 2
++    .param p1, "channelMask"    # J
++
++    .line 93
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v1, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, "channelmask="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1, p2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 94
++    return-void
++.end method
++
++.method public setInitParameters(Ljava/lang/String;I)V
++    .locals 2
++    .param p1, "deviceId"    # Ljava/lang/String;
++    .param p2, "mics"    # I
++
++    .line 87
++    const/4 v0, 0x1
++
++    iput-boolean v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mUUIDAvailable:Z
++
++    .line 88
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    iget-object v1, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, "mode=miwnsaudio;device="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";input-channels="
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    const-string v1, ";"
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    move-result-object v0
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    iput-object v0, p0, Lcom/android/miwnsaudio/lib/MiwnsAudioImpl;->mInitConfiguration:Ljava/lang/String;
++
++    .line 89
++    return-void
++.end method
