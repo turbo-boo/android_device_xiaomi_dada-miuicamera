@@ -1,0 +1,5 @@
+# Label only the search-root directories; their libraries retain the existing
+# same_process_hal_file labels from the common device policy.
+/(odm|vendor/odm)/lib/rfsa/adsp u:object_r:vendor_miuicamera_dsp_file:s0
+/(vendor|system/vendor)/lib/rfsa/adsp u:object_r:vendor_miuicamera_dsp_file:s0
+/(vendor|system/vendor)/lib64/rfs/dsp u:object_r:vendor_miuicamera_dsp_file:s0
