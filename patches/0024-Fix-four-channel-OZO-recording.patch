@@ -1,7 +1,17 @@
 diff --git a/smali/Ib/e.smali b/smali/Ib/e.smali
+index 8eb02b4..88174ca 100644
 --- a/smali/Ib/e.smali
 +++ b/smali/Ib/e.smali
-@@ -344,6 +344,15 @@
+@@ -82,7 +82,7 @@
+ 
+     iget-boolean v0, v0, LIb/q;->a:Z
+ 
+-    if-eqz v0, :cond_15
++    if-eqz v0, :cond_16
+ 
+     iget-object v0, v1, LIb/j;->g:LKb/b;
+ 
+@@ -344,6 +344,16 @@
  
      move-result-object v0
  
@@ -14,47 +24,280 @@ diff --git a/smali/Ib/e.smali b/smali/Ib/e.smali
 +    const v7, 0x60000c
 +
 +    :cond_dada_ozo_position_mask_done
++
      invoke-virtual {v0, v7}, Landroid/media/AudioFormat$Builder;->setChannelMask(I)Landroid/media/AudioFormat$Builder;
  
      move-result-object v0
-@@ -396,5 +405,14 @@
+@@ -395,16 +405,25 @@
+ 
      :cond_b
      :goto_4
+-    if-lez v7, :cond_c
 +    iget-object v13, v1, LIb/b;->e:LIb/q;
-+
+ 
+-    invoke-virtual {v6, v7}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
 +    iget-boolean v13, v13, LIb/q;->w:Z
 +
-+    if-eqz v13, :cond_dada_ozo_config_index_done
++    if-eqz v13, :cond_c
 +
 +    const/16 v7, 0xf
-+
-+    :cond_dada_ozo_config_index_done
-     if-lez v7, :cond_c
  
-     invoke-virtual {v6, v7}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
-@@ -484,5 +502,7 @@
+     :cond_c
++    if-lez v7, :cond_d
++
++    invoke-virtual {v6, v7}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
++
++    :cond_d
+     iget-object v0, v1, LIb/b;->e:LIb/q;
+ 
+     iget v7, v0, LIb/q;->b:I
+ 
+-    if-le v7, v3, :cond_d
++    if-le v7, v3, :cond_e
+ 
+     iget-object v0, v0, LIb/q;->x:[I
+ 
+@@ -412,13 +431,13 @@
+ 
+     move-result v0
+ 
+-    if-nez v0, :cond_d
++    if-nez v0, :cond_e
+ 
+     iget-object v0, v1, LIb/b;->e:LIb/q;
+ 
+     iget-boolean v0, v0, LIb/q;->w:Z
+ 
+-    if-eqz v0, :cond_d
++    if-eqz v0, :cond_e
+ 
+     const-string v7, "getChannelIndexMask4 err"
+ 
+@@ -481,9 +500,11 @@
+     invoke-static {v10, v7, v0}, Lcom/android/camera/log/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
  
      :goto_7
 +    const/16 v5, 0xf
 +
      invoke-virtual {v6, v5}, Landroid/media/AudioFormat$Builder;->setChannelIndexMask(I)Landroid/media/AudioFormat$Builder;
  
-     :cond_d
-diff --git a/smali_classes2/com/android/camera/module/video/x.smali b/smali_classes2/com/android/camera/module/video/x.smali
---- a/smali_classes2/com/android/camera/module/video/x.smali
-+++ b/smali_classes2/com/android/camera/module/video/x.smali
-@@ -2619,6 +2619,14 @@
+-    :cond_d
++    :cond_e
+     invoke-virtual {v6}, Landroid/media/AudioFormat$Builder;->build()Landroid/media/AudioFormat;
  
-     iput v4, v8, LIb/q;->b:I
+     move-result-object v13
+@@ -508,11 +529,11 @@
  
-+    if-eqz p2, :cond_dada_ozo_channels_done
+     iget v4, v0, LIb/q;->b:I
+ 
+-    if-ne v4, v3, :cond_e
++    if-ne v4, v3, :cond_f
+ 
+     const/16 v5, 0x10
+ 
+-    :cond_e
++    :cond_f
+     iget v0, v0, LIb/q;->e:I
+ 
+     invoke-static {v0, v5, v11}, Landroid/media/AudioRecord;->getMinBufferSize(III)I
+@@ -539,64 +560,60 @@
+ 
+     iget v4, v0, LIb/q;->c:I
+ 
+-    if-eq v4, v3, :cond_14
++    if-eq v4, v3, :cond_15
+ 
+-    if-eq v4, v11, :cond_13
++    if-eq v4, v11, :cond_14
+ 
+-    if-eq v4, v8, :cond_12
++    if-eq v4, v8, :cond_13
+ 
+-    if-eq v4, v9, :cond_11
++    if-eq v4, v9, :cond_12
+ 
+     const/4 v5, 0x6
+ 
+-    if-eq v4, v5, :cond_10
++    if-eq v4, v5, :cond_11
+ 
+     const/4 v5, 0x7
+ 
+-    if-eq v4, v5, :cond_f
++    if-eq v4, v5, :cond_10
+ 
+     const-string v4, "audio/mp4a-latm"
+ 
+     goto :goto_8
+ 
+-    :cond_f
++    :cond_10
+     const-string v4, "audio/opus"
+ 
+     goto :goto_8
+ 
+-    :cond_10
++    :cond_11
+     const-string v4, "audio/vorbis"
+ 
+     goto :goto_8
+ 
+-    :cond_11
++    :cond_12
+     const-string v4, "audio/mp4a.40.39"
+ 
+     goto :goto_8
+ 
+-    :cond_12
++    :cond_13
+     const-string v4, "audio/mp4a.40.05"
+ 
+     goto :goto_8
+ 
+-    :cond_13
++    :cond_14
+     const-string v4, "audio/amr-wb"
+ 
+     goto :goto_8
+ 
+-    :cond_14
++    :cond_15
+     const-string v4, "audio/3gpp"
+ 
+     :goto_8
+     iget v0, v0, LIb/q;->e:I
+ 
+-    iget-object v5, v1, LIb/j;->g:LKb/b;
++    iget-object v5, v1, LIb/b;->e:LIb/q;
+ 
+-    iget-object v5, v5, LKb/b;->e:Landroid/media/AudioFormat;
+-
+-    invoke-virtual {v5}, Landroid/media/AudioFormat;->getChannelCount()I
+-
+-    move-result v5
++    iget v5, v5, LIb/q;->b:I
+ 
+     invoke-static {v4, v0, v5}, Landroid/media/MediaFormat;->createAudioFormat(Ljava/lang/String;II)Landroid/media/MediaFormat;
+ 
+@@ -640,7 +657,7 @@
+ 
+     invoke-virtual {v4, v0, v3}, LLb/c;->f(Landroid/media/MediaFormat;I)V
+ 
+-    :cond_15
++    :cond_16
+     :goto_9
+     sget-object v0, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
+ 
+diff --git a/smali/Kb/c.smali b/smali/Kb/c.smali
+index 1ad1fb9..cca60ef 100644
+--- a/smali/Kb/c.smali
++++ b/smali/Kb/c.smali
+@@ -88,6 +88,107 @@
+     iput-wide v7, v1, LKb/c;->b:J
+ 
+     :cond_0
++    iget-object v3, v0, LKb/b;->a:Landroid/media/AudioRecord;
++
++    invoke-virtual {v3}, Landroid/media/AudioRecord;->getChannelCount()I
++
++    move-result v3
 +
 +    const/4 v4, 0x4
 +
-+    iput v4, v8, LIb/q;->b:I
++    if-ne v3, v4, :cond_dada_ozo_downmix_done
 +
-+    :cond_dada_ozo_channels_done
++    move/from16 v8, p4
 +
-     iget v4, v3, Landroid/media/CamcorderProfile;->audioSampleRate:I
++    div-int/lit8 v3, v8, 0x2
++
++    invoke-static {v3}, Ljava/nio/ByteBuffer;->allocateDirect(I)Ljava/nio/ByteBuffer;
++
++    move-result-object v5
++
++    invoke-static {}, Ljava/nio/ByteOrder;->nativeOrder()Ljava/nio/ByteOrder;
++
++    move-result-object v4
++
++    move-object/from16 v3, p3
++
++    invoke-virtual {v3, v4}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
++
++    invoke-virtual {v5, v4}, Ljava/nio/ByteBuffer;->order(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;
++
++    const/4 v6, 0x0
++
++    :cond_dada_ozo_downmix_loop
++    if-ge v6, v8, :cond_dada_ozo_downmix_complete
++
++    move-object/from16 v3, p3
++
++    invoke-virtual {v3, v6}, Ljava/nio/ByteBuffer;->getShort(I)S
++
++    move-result v7
++
++    mul-int/lit8 v7, v7, 0x8
++
++    const/16 v4, 0x7fff
++
++    invoke-static {v7, v4}, Ljava/lang/Math;->min(II)I
++
++    move-result v7
++
++    const/16 v4, -0x8000
++
++    invoke-static {v7, v4}, Ljava/lang/Math;->max(II)I
++
++    move-result v7
++
++    int-to-short v7, v7
++
++    move-object v3, v5
++
++    invoke-virtual {v3, v7}, Ljava/nio/ByteBuffer;->putShort(S)Ljava/nio/ByteBuffer;
++
++    add-int/lit8 v4, v6, 0x2
++
++    move-object/from16 v3, p3
++
++    invoke-virtual {v3, v4}, Ljava/nio/ByteBuffer;->getShort(I)S
++
++    move-result v7
++
++    mul-int/lit8 v7, v7, 0x8
++
++    const/16 v4, 0x7fff
++
++    invoke-static {v7, v4}, Ljava/lang/Math;->min(II)I
++
++    move-result v7
++
++    const/16 v4, -0x8000
++
++    invoke-static {v7, v4}, Ljava/lang/Math;->max(II)I
++
++    move-result v7
++
++    int-to-short v7, v7
++
++    move-object v3, v5
++
++    invoke-virtual {v3, v7}, Ljava/nio/ByteBuffer;->putShort(S)Ljava/nio/ByteBuffer;
++
++    add-int/lit8 v6, v6, 0x8
++
++    goto :cond_dada_ozo_downmix_loop
++
++    :cond_dada_ozo_downmix_complete
++    invoke-virtual {v5}, Ljava/nio/ByteBuffer;->rewind()Ljava/nio/ByteBuffer;
++
++    move-object/16 p3, v5
++
++    div-int/lit8 v8, v8, 0x2
++
++    move/16 p4, v8
++
++    :cond_dada_ozo_downmix_done
+     new-instance v3, LLb/f;
  
-     iput v4, v8, LIb/q;->e:I
+     iget-wide v12, v1, LKb/c;->b:J
+
