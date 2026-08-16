@@ -5,6 +5,7 @@ ro.com.google.lens.oem_camera_package=com.android.camera
 persist.vendor.camera.privapp.list=com.android.camera,org.lineageos.aperture
 
 # MiuiCamera
+ro.product.camera.livephoto.support=3
 ro.miui.build.region=global
 ro.miui.notch=1
 ro.miui.region=JP
