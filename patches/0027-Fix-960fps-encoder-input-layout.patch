@@ -1,0 +1,47 @@
+diff --git a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
+--- a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
++++ b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
+@@ -221,6 +221,12 @@
+ 
+     iget-object v0, v0, Lcom/miui/extravideoxmalgo/XiaomiAlgoVideoInterpolatorImp/XiaomiAlgoEncodeBufferHolder;->data:[B
+ 
++    iget-object v1, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback;->this$0:Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;
++
++    invoke-static {v1, v0}, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;->prepareEncoderInput(Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;[B)[B
++
++    move-result-object v0
++
+     invoke-virtual {p1, v0}, Ljava/nio/ByteBuffer;->put([B)Ljava/nio/ByteBuffer;
+ 
+     iget-object p1, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback;->this$0:Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;
+diff --git a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
+--- a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
++++ b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
+@@ -138,7 +138,7 @@
+     .line 13
+     const-string v2, "color-format"
+ 
+-    const v3, 0x7f420888
++    const/16 v3, 0x15
+ 
+     invoke-virtual {v1, v2, v3}, Landroid/media/MediaFormat;->setInteger(Ljava/lang/String;I)V
+ 
+@@ -349,6 +349,18 @@
+ 
+ 
+ # virtual methods
++.method public static prepareEncoderInput(Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;[B)[B
++    .locals 2
++
++    iget v0, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;->mWidth:I
++
++    iget v1, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;->mHeight:I
++
++    invoke-static {p1, v0, v1}, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/MediaColorConvertUtils;->toggleYUV([BII)V
++
++    return-object p1
++.end method
++
+ .method public getFrameRate()I
+     .locals 0
+ 
