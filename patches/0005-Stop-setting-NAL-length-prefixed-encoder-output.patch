@@ -1,0 +1,13 @@
+diff --git a/smali_classes9/Sp/g.smali b/smali_classes9/Sp/g.smali
+index 9692460..3158feb 100644
+--- a/smali_classes9/Sp/g.smali
++++ b/smali_classes9/Sp/g.smali
+@@ -800,7 +800,7 @@
+ 
+     iget-boolean v7, v3, LSp/q;->x:Z
+ 
+-    if-eqz v7, :cond_1e
++    goto :cond_1e
+ 
+     iget v7, v3, LSp/q;->l:I
+ 
