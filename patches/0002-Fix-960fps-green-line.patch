@@ -1,8 +1,8 @@
-diff --git a/smali_classes4/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali b/smali_classes4/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali
+diff --git a/smali_classes3/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali b/smali_classes3/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali
 new file mode 100644
-index 0000000..5f66913
+index 00000000..5f669134
 --- /dev/null
-+++ b/smali_classes4/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali
++++ b/smali_classes3/com/miui/extravideoxmalgo/debug/EncoderInputFix.smali
 @@ -0,0 +1,133 @@
 +.class public final Lcom/miui/extravideoxmalgo/debug/EncoderInputFix;
 +.super Ljava/lang/Object;
@@ -137,29 +137,31 @@ index 0000000..5f66913
 +    :goto_4e
 +    return-object p0
 +.end method
-diff --git a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
-index 9be6689..715aa0e 100644
---- a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
-+++ b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
-@@ -227,6 +227,10 @@
+diff --git a/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali b/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
+index f0cd68c3..761e0837 100644
+--- a/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
++++ b/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback.smali
+@@ -202,6 +202,12 @@
  
-     move-result-object v0
+     iget-object p2, p2, Lcom/miui/extravideoxmalgo/XiaomiAlgoVideoInterpolatorImp/XiaomiAlgoEncodeBufferHolder;->data:[B
  
-+    invoke-static {v1, v0, p1}, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;->fixEncoderInputTail(Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;[BLjava/nio/ByteBuffer;)[B
++    iget-object v0, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback;->this$0:Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;
 +
-+    move-result-object v0
++    invoke-static {v0, p2, p1}, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;->fixEncoderInputTail(Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;[BLjava/nio/ByteBuffer;)[B
 +
-     invoke-virtual {p1, v0}, Ljava/nio/ByteBuffer;->put([B)Ljava/nio/ByteBuffer;
++    move-result-object p2
++
+     invoke-virtual {p1, p2}, Ljava/nio/ByteBuffer;->put([B)Ljava/nio/ByteBuffer;
  
      iget-object p1, p0, Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync$CustomCallback;->this$0:Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;
-diff --git a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
-index 1bee417..d440184 100644
---- a/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
-+++ b/smali_classes4/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
-@@ -359,6 +359,22 @@
-     return-object p1
- .end method
+diff --git a/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali b/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
+index 2ac4331a..07be77bd 100644
+--- a/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
++++ b/smali_classes3/com/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync.smali
+@@ -348,6 +348,22 @@
  
+ 
+ # virtual methods
 +.method public static fixEncoderInputTail(Lcom/miui/extravideoxmalgo/xaiomiAlogMedia/XiaomiAlgoEncoderAsync;[BLjava/nio/ByteBuffer;)[B
 +    .locals 2
 +
@@ -176,6 +178,6 @@ index 1bee417..d440184 100644
 +    return-object v0
 +.end method
 +
- 
- # virtual methods
  .method public getFrameRate()I
+     .locals 0
+ 
