@@ -1,0 +1,52 @@
+diff --git a/smali_classes3/Je/b.smali b/smali_classes3/Je/b.smali
+index 2b82df3..7b8d6e4 100644
+--- a/smali_classes3/Je/b.smali
++++ b/smali_classes3/Je/b.smali
+@@ -1131,47 +1131,6 @@
+ .method public final H()Z
+     .locals 1
+ 
+-    invoke-virtual {p0}, LJe/b;->G()Z
+-
+-    move-result p0
+-
+-    if-nez p0, :cond_1
+-
+-    sget-object p0, LQa/b;->o0:Ljava/lang/String;
+-
+-    invoke-static {p0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+-
+-    move-result p0
+-
+-    if-nez p0, :cond_0
+-
+-    sget-object p0, LQa/b;->o0:Ljava/lang/String;
+-
+-    goto :goto_0
+-
+-    :cond_0
+-    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+-
+-    move-result-object p0
+-
+-    invoke-virtual {p0}, Ljava/util/Locale;->getCountry()Ljava/lang/String;
+-
+-    move-result-object p0
+-
+-    :goto_0
+-    sget-object v0, LQa/b;->l0:Ljava/util/List;
+-
+-    invoke-interface {v0, p0}, Ljava/util/List;->contains(Ljava/lang/Object;)Z
+-
+-    move-result p0
+-
+-    if-eqz p0, :cond_1
+-
+-    const/4 p0, 0x1
+-
+-    return p0
+-
+-    :cond_1
+     const/4 p0, 0x0
+ 
+     return p0
