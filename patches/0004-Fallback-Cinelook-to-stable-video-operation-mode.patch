@@ -1,0 +1,13 @@
+diff --git a/smali/y3/e.smali b/smali/y3/e.smali
+index a06fd04..240a3ab 100644
+--- a/smali/y3/e.smali
++++ b/smali/y3/e.smali
+@@ -596,7 +596,7 @@
+ 
+     if-eqz p1, :cond_20
+ 
+-    const p1, 0x8033
++    const p1, 0x8004
+ 
+     goto/16 :goto_4
+ 
