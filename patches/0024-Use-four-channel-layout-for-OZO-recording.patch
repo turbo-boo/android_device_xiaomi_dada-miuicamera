@@ -1,0 +1,40 @@
+diff --git a/smali_classes9/Sp/f.smali b/smali_classes9/Sp/f.smali
+--- a/smali_classes9/Sp/f.smali
++++ b/smali_classes9/Sp/f.smali
+@@ -339,6 +339,13 @@
+     move-result v7
+ 
+     if-eqz v7, :cond_8
++    const/4 v7, 0x1
++
++    aget v7, v0, v7
++
++    const/4 v8, 0x2
++
++    if-eq v7, v8, :cond_8
+ 
+     const/4 v7, 0x3
+ 
+ diff --git a/smali_classes9/Sp/x.smali b/smali_classes9/Sp/x.smali
+--- a/smali_classes9/Sp/x.smali
++++ b/smali_classes9/Sp/x.smali
+@@ -226,6 +226,19 @@
+     goto :goto_0
+ 
+     :cond_0
++    const/4 v0, 0x1
++
++    aget v0, p0, v0
++
++    const/4 v1, 0x2
++
++    if-ne v0, v1, :cond_2
++
++    const p0, 0x60000c
++
++    return p0
++
++    :cond_2
+     const/4 v0, 0x2
+ 
+     aget p0, p0, v0
