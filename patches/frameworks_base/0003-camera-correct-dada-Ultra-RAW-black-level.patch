@@ -1,0 +1,21 @@
+From 492c68c2528829fc318bfaae2260c5240397a943 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Mon, 17 Aug 2026 11:12:58 +0900
+Subject: [PATCH 2/3] camera: correct dada Ultra RAW black level
+
+
+diff --git a/core/jni/android_hardware_camera2_DngCreator.cpp b/core/jni/android_hardware_camera2_DngCreator.cpp
+index 43977f9b4..10d4cb92f 100644
+--- a/core/jni/android_hardware_camera2_DngCreator.cpp
++++ b/core/jni/android_hardware_camera2_DngCreator.cpp
+@@ -1476,7 +1476,9 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
+                 nativeContext->getDescription() == String8("Xiaomi Ultra RAW");
+         if (ultraRaw) {
+             for (size_t i = 0; i < 4; i++) {
+-                blackLevelRational[i * 2] = 1024;
++                // The AISP Ultra RAW output is already black-subtracted even
++                // though its capture metadata reports the sensor black level.
++                blackLevelRational[i * 2] = 0;
+                 blackLevelRational[i * 2 + 1] = 1;
+             }
+         } else if (entry.count != 0) {

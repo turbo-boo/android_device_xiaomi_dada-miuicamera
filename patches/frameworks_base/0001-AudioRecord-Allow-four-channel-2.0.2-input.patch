@@ -1,0 +1,21 @@
+From e7e7abbb616321a96a1af7c2896d221a4e87982f Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Mon, 20 Jul 2026 23:46:30 +0900
+Subject: [PATCH] AudioRecord: Allow four-channel 2.0.2 input
+
+---
+ media/java/android/media/AudioRecord.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/media/java/android/media/AudioRecord.java b/media/java/android/media/AudioRecord.java
+index d28cb3bb9..4feb15fff 100644
+--- a/media/java/android/media/AudioRecord.java
++++ b/media/java/android/media/AudioRecord.java
+@@ -1123,6 +1123,7 @@ public class AudioRecord implements AudioRouting, MicrophoneDirection,
+             mask = AudioFormat.CHANNEL_IN_STEREO;
+             break;
+         case (AudioFormat.CHANNEL_IN_FRONT | AudioFormat.CHANNEL_IN_BACK):
++        case AudioFormat.CHANNEL_IN_2POINT0POINT2:
+             mask = inChannelConfig;
+             break;
+         default:

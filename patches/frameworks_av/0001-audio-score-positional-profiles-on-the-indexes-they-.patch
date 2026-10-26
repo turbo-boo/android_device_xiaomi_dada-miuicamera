@@ -1,0 +1,99 @@
+From 5880a60217856b227a3072e0c77bce00501bb243 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Fri, 25 Sep 2026 14:10:17 +0900
+Subject: [PATCH] audio: score positional profiles on the indexes they actually
+ map
+
+checkCompatibleChannelMask() adds a +100 preference when a requested index mask is matched against a positional profile with at most two channels, to work around the HAL convention of not listing index masks for mono and stereo. The preference was applied even when none of the requested indexes could be mapped, so a disjoint stereo profile outscored the four-channel 2.0.2 profile that actually matched and the record stream came out silent.
+
+Require at least one mapped channel before applying the preference, and add a test for the four-channel 2.0.2 input case.
+---
+ .../src/AudioProfileVectorHelper.cpp          | 28 +++++++++----------
+ .../tests/audiopolicymanager_tests.cpp        | 19 +++++++++++++
+ 2 files changed, 33 insertions(+), 14 deletions(-)
+
+diff --git a/services/audiopolicy/common/managerdefinitions/src/AudioProfileVectorHelper.cpp b/services/audiopolicy/common/managerdefinitions/src/AudioProfileVectorHelper.cpp
+index 164f70a303..32a127f1fc 100644
+--- a/services/audiopolicy/common/managerdefinitions/src/AudioProfileVectorHelper.cpp
++++ b/services/audiopolicy/common/managerdefinitions/src/AudioProfileVectorHelper.cpp
+@@ -275,26 +275,26 @@ status_t checkCompatibleChannelMask(const sp<AudioProfile> &audioProfile,
+             // OR
+             // match score += 100 if the channel mask representations match
+             // match score += number of channels matched.
+-            // match score += 100 if the channel mask representations DO NOT match
+-            //   but the profile has positional channel mask and less than 2 channels.
+-            //   This is for audio HAL convention to not list index masks for less than 2 channels
++            // match score += 100 if the channel mask representations DO NOT match,
++            //   but the profile has a positional channel mask with up to 2 channels and at
++            //   least one requested index can be mapped.
++            //   This is for the audio HAL convention to not list index masks for mono or
++            //   stereo profiles. A disjoint mask must not receive this preference because
++            //   accepting it would produce a silent stream.
+             //
+-            // If there are no matched channels, the mask may still be accepted
+-            // but the playback or record will be silent.
+-            const bool isSupportedIndex = (audio_channel_mask_get_representation(supported)
+-                    == AUDIO_CHANNEL_REPRESENTATION_INDEX);
++            const bool isSupportedIndex = (audio_channel_mask_get_representation(supported) ==
++                                           AUDIO_CHANNEL_REPRESENTATION_INDEX);
+             const uint32_t supportedChannelCount = audio_channel_count_from_in_mask(supported);
+             int match;
+             if (isIndex && isSupportedIndex) {
+                 // index equivalence
+-                match = 100 + __builtin_popcount(
+-                        audio_channel_mask_get_bits(channelMask)
+-                            & audio_channel_mask_get_bits(supported));
++                match = 100 + __builtin_popcount(audio_channel_mask_get_bits(channelMask) &
++                                                 audio_channel_mask_get_bits(supported));
+             } else if (isIndex && !isSupportedIndex) {
+-                const uint32_t equivalentBits = (1 << supportedChannelCount) - 1 ;
+-                match = __builtin_popcount(
+-                        audio_channel_mask_get_bits(channelMask) & equivalentBits);
+-                if (supportedChannelCount <= FCC_2) {
++                const uint32_t equivalentBits = (1 << supportedChannelCount) - 1;
++                match = __builtin_popcount(audio_channel_mask_get_bits(channelMask) &
++                                           equivalentBits);
++                if (match > 0 && supportedChannelCount <= FCC_2) {
+                     match += 100;
+                 }
+             } else if (!isIndex && isSupportedIndex) {
+diff --git a/services/audiopolicy/tests/audiopolicymanager_tests.cpp b/services/audiopolicy/tests/audiopolicymanager_tests.cpp
+index a12e234c19..8438e7443a 100644
+--- a/services/audiopolicy/tests/audiopolicymanager_tests.cpp
++++ b/services/audiopolicy/tests/audiopolicymanager_tests.cpp
+@@ -47,6 +47,7 @@
+ #include "AudioPolicyManagerTestClient.h"
+ #include "AudioPolicyTestClient.h"
+ #include "AudioPolicyTestManager.h"
++#include "AudioProfileVectorHelper.h"
+ #include "test_execution_tracer.h"
+ 
+ using namespace android;
+@@ -134,6 +135,24 @@ TEST(AudioPolicyConfigTest, LoadForTests) {
+     }
+ }
+ 
++TEST(AudioProfileVectorHelperTest, DisjointStereoDoesNotOverrideMatchingFourChannelInput) {
++    const audio_channel_mask_t requestedMask = audio_channel_mask_from_representation_and_bits(
++            AUDIO_CHANNEL_REPRESENTATION_INDEX, 0xc);
++    AudioProfileVector profiles;
++    profiles.add(sp<AudioProfile>::make(
++            AUDIO_FORMAT_PCM_16_BIT,
++            ChannelMaskSet{AUDIO_CHANNEL_IN_MONO, AUDIO_CHANNEL_IN_STEREO,
++                           AUDIO_CHANNEL_IN_FRONT_BACK, AUDIO_CHANNEL_IN_2POINT0POINT2},
++            SampleRateSet{48000}));
++    uint32_t samplingRate = 48000;
++    audio_channel_mask_t channelMask = requestedMask;
++    audio_format_t format = AUDIO_FORMAT_PCM_16_BIT;
++
++    ASSERT_EQ(NO_ERROR, checkCompatibleProfile(profiles, samplingRate, channelMask, format,
++                                               AUDIO_PORT_TYPE_MIX, AUDIO_PORT_ROLE_SINK));
++    EXPECT_EQ(AUDIO_CHANNEL_IN_2POINT0POINT2, channelMask);
++}
++
+ TEST(AudioPolicyManagerTestInit, EngineFailure) {
+     AudioPolicyTestClient client;
+     auto config = AudioPolicyConfig::createWritableForTests();
+-- 
+2.43.0
+

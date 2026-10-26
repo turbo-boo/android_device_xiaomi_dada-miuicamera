@@ -1,0 +1,27 @@
+From d65a89ffb81bd066e4a0c1c2706bf792a60b2d11 Mon Sep 17 00:00:00 2001
+From: turbo-boo <59400127+turbo-boo@users.noreply.github.com>
+Date: Mon, 17 Aug 2026 11:12:58 +0900
+Subject: [PATCH 3/3] camera: scale dada full-resolution RAW gain map
+
+
+diff --git a/core/jni/android_hardware_camera2_DngCreator.cpp b/core/jni/android_hardware_camera2_DngCreator.cpp
+index 10d4cb92f..22befde0d 100644
+--- a/core/jni/android_hardware_camera2_DngCreator.cpp
++++ b/core/jni/android_hardware_camera2_DngCreator.cpp
+@@ -2072,6 +2072,16 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
+         uint32_t ymin = static_cast<uint32_t>(entry.data.i32[1]);
+         uint32_t width = static_cast<uint32_t>(entry.data.i32[2]);
+         uint32_t height = static_cast<uint32_t>(entry.data.i32[3]);
++        if (fullResolutionFallback) {
++            // The shading map grid remains valid at full resolution, but its
++            // target rectangle must cover the full RAW buffer. Leaving the
++            // binned dimensions here applies it to only one image quadrant in
++            // renderers such as Google Photos.
++            xmin *= 2;
++            ymin *= 2;
++            width = imageWidth;
++            height = imageHeight;
++        }
+         if (entry2.count > 0 && entry2.count == lsmWidth * lsmHeight * 4) {
+             // GainMap rectangle is relative to the active area origin.
+             err = builder.addGainMapsForMetadata(lsmWidth,
