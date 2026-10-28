@@ -1,3 +1,14 @@
+From a69501fdf8a72ee2bdde043ef1a3389edc137598 Mon Sep 17 00:00:00 2001
+From: danielml <daniel@danielml.dev>
+Date: Fri, 19 Apr 2024 17:32:08 +0200
+Subject: [PATCH] Assume that mod_device is global
+
+Otherwise, the app tries to start a custom permissions dialog which
+has dependencies on HyperOS Security Center app
+
+Change-Id: I8962a6e409f5aa30f84fccd482fefe78767069c2
+Signed-off-by: danielml <daniel@danielml.dev>
+---
 diff --git a/smali_classes3/Je/c.smali b/smali_classes3/Je/c.smali
 index 589cba43..52e5e90c 100644
 --- a/smali_classes3/Je/c.smali

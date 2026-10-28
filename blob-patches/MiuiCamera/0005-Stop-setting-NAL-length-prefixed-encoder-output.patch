@@ -1,3 +1,9 @@
+From 6cb13c1c06044a6b7f11330d6e799885bfca7029 Mon Sep 17 00:00:00 2001
+From: AdarshGrewal <adarshgrewal@gmail.com>
+Date: Sun, 7 Jun 2026 16:22:40 +0530
+Subject: [PATCH] Stop setting NAL length-prefixed encoder output
+
+---
 diff --git a/smali_classes9/Sp/g.smali b/smali_classes9/Sp/g.smali
 index 9692460..3158feb 100644
 --- a/smali_classes9/Sp/g.smali
